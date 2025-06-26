@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import BudClient
+import Tools
+
 
 @main
 struct BudClientiOSApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BudClientView()
         }
     }
 }
