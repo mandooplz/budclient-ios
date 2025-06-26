@@ -20,9 +20,13 @@ struct BudClientView: View {
                 .tabItem {
                     Label("Auth", systemImage: "person")
                 }
-            Text("Projects")
+            Text("Project")
                 .tabItem {
-                    Label("Project", systemImage: "folder")
+                    Label("Projects", systemImage: "folder")
+                }
+            Text("Profile")
+                .tabItem {
+                    Label("Profile", systemImage: "person.crop.circle")
                 }
         }
         .task {
@@ -45,3 +49,4 @@ struct BudClientView: View {
 #Preview {
     BudClientView()
 }
+
