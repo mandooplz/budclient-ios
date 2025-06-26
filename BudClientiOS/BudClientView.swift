@@ -12,15 +12,33 @@ import Tools
 struct BudClientView: View {
     @State var budClientRef = BudClient(mode: .real,
                                         plistPath: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
+    @State private var isShowingIssueAlert = false
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            Text("Auth")
+                .tabItem {
+                    Label("Auth", systemImage: "person")
+                }
+            Text("Projects")
+                .tabItem {
+                    Label("Project", systemImage: "folder")
+                }
         }
-        .padding()
+        .task {
+            budClientRef.setUp()
+            
+            if budClientRef.issue != nil {
+                isShowingIssueAlert = true
+            }
+        }
+        .alert(isPresented: $isShowingIssueAlert) {
+            Alert(
+                title: Text("Issue"),
+                message: Text(budClientRef.issue?.reason ?? ""),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 
