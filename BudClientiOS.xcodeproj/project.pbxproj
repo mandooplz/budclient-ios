@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CEBD9F112E0D5D9600F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F102E0D5D9600F05748 /* BudClient */; };
+		CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F132E0D5E4300F05748 /* BudClient */; };
+		CEBD9F162E0D5E4300F05748 /* BudServer in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F152E0D5E4300F05748 /* BudServer */; };
+		CEBD9F182E0D5E4300F05748 /* BudServerMock in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F172E0D5E4300F05748 /* BudServerMock */; };
+		CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F192E0D5E4300F05748 /* Tools */; };
+		CEBD9F1D2E0D5F7A00F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F1C2E0D5F7A00F05748 /* BudClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +60,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEBD9F112E0D5D9600F05748 /* BudClient in Frameworks */,
+				CEBD9F182E0D5E4300F05748 /* BudServerMock in Frameworks */,
+				CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */,
+				CEBD9F1D2E0D5F7A00F05748 /* BudClient in Frameworks */,
+				CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */,
+				CEBD9F162E0D5E4300F05748 /* BudServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +125,11 @@
 			);
 			name = BudClientiOS;
 			packageProductDependencies = (
-				CEBD9F102E0D5D9600F05748 /* BudClient */,
+				CEBD9F132E0D5E4300F05748 /* BudClient */,
+				CEBD9F152E0D5E4300F05748 /* BudServer */,
+				CEBD9F172E0D5E4300F05748 /* BudServerMock */,
+				CEBD9F192E0D5E4300F05748 /* Tools */,
+				CEBD9F1C2E0D5F7A00F05748 /* BudClient */,
 			);
 			productName = BudClientiOS;
 			productReference = CEA457862E0CFEF6008F5A0C /* BudClientiOS.app */;
@@ -202,7 +214,7 @@
 			mainGroup = CEA4577D2E0CFEF6008F5A0C;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CEBD9F0F2E0D5D9600F05748 /* XCLocalSwiftPackageReference "../BudClient" */,
+				CEBD9F1B2E0D5F7A00F05748 /* XCRemoteSwiftPackageReference "budclient" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CEA457872E0CFEF6008F5A0C /* Products */;
@@ -582,16 +594,37 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		CEBD9F0F2E0D5D9600F05748 /* XCLocalSwiftPackageReference "../BudClient" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../BudClient;
+/* Begin XCRemoteSwiftPackageReference section */
+		CEBD9F1B2E0D5F7A00F05748 /* XCRemoteSwiftPackageReference "budclient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:mandooplz/budclient.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CEBD9F102E0D5D9600F05748 /* BudClient */ = {
+		CEBD9F132E0D5E4300F05748 /* BudClient */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = BudClient;
+		};
+		CEBD9F152E0D5E4300F05748 /* BudServer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BudServer;
+		};
+		CEBD9F172E0D5E4300F05748 /* BudServerMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BudServerMock;
+		};
+		CEBD9F192E0D5E4300F05748 /* Tools */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Tools;
+		};
+		CEBD9F1C2E0D5F7A00F05748 /* BudClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEBD9F1B2E0D5F7A00F05748 /* XCRemoteSwiftPackageReference "budclient" */;
 			productName = BudClient;
 		};
 /* End XCSwiftPackageProductDependency section */
