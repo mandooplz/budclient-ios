@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE4A1DBF2E0F0911001254F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */; };
 		CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F132E0D5E4300F05748 /* BudClient */; };
 		CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F192E0D5E4300F05748 /* Tools */; };
 		CEBD9F1D2E0D5F7A00F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F1C2E0D5F7A00F05748 /* BudClient */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CEA457862E0CFEF6008F5A0C /* BudClientiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudClientiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA457932E0CFEF7008F5A0C /* BudClientiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudClientiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA4579D2E0CFEF7008F5A0C /* BudClientiOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudClientiOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 				CEA457962E0CFEF7008F5A0C /* BudClientiOSTests */,
 				CEA457A02E0CFEF7008F5A0C /* BudClientiOSUITests */,
 				CEA457872E0CFEF6008F5A0C /* Products */,
+				CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -227,6 +230,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4A1DBF2E0F0911001254F5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
