@@ -12,9 +12,12 @@ import Tools
 
 @main
 struct BudClientiOSApp: App {
+    let budClientRef = BudClient(mode: .real,
+                                 plistPath: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
+    
     var body: some Scene {
         WindowGroup {
-            BudClientView()
+            BudClientView(budClientRef: budClientRef)
         }
     }
 }
