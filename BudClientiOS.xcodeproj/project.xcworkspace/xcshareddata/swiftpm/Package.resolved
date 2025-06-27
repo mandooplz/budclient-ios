@@ -1,5 +1,5 @@
 {
-  "originHash" : "7e510bca733bac1b2f6986fa5f362edb5801b8ec28ad3fc7f2e7cc63ae19f7f1",
+  "originHash" : "1a77276e359495e017985fb59b746506102e8ff6683c52d1755ff48173e32b81",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -17,15 +17,6 @@
       "state" : {
         "revision" : "3b62f154d00019ae29a71e9738800bb6f18b236d",
         "version" : "10.19.2"
-      }
-    },
-    {
-      "identity" : "budclient",
-      "kind" : "remoteSourceControl",
-      "location" : "git@github.com:mandooplz/budclient.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "3997b219f85ea9b93cd0c38fed7a16a876a1e840"
       }
     },
     {
