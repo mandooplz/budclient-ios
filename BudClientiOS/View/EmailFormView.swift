@@ -53,6 +53,8 @@ struct EmailFormView: View {
             }
         }
         .padding()
+        .task {
+        }
     }
     
     

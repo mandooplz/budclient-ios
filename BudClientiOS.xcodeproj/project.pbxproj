@@ -12,6 +12,8 @@
 		CE6FE50C2E0F10CB00F1A6BD /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CE6FE50B2E0F10CB00F1A6BD /* Tools */; };
 		CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F132E0D5E4300F05748 /* BudClient */; };
 		CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F192E0D5E4300F05748 /* Tools */; };
+		CEF320442E10003000072C6C /* BudCache in Frameworks */ = {isa = PBXBuildFile; productRef = CEF320432E10003000072C6C /* BudCache */; };
+		CEF320462E10003000072C6C /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEF320452E10003000072C6C /* Tools */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +63,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF320462E10003000072C6C /* Tools in Frameworks */,
 				CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */,
+				CEF320442E10003000072C6C /* BudCache in Frameworks */,
 				CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */,
 				CE6FE50C2E0F10CB00F1A6BD /* Tools in Frameworks */,
 				CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */,
@@ -130,6 +134,8 @@
 				CEBD9F192E0D5E4300F05748 /* Tools */,
 				CE6FE5092E0F10CB00F1A6BD /* BudClient */,
 				CE6FE50B2E0F10CB00F1A6BD /* Tools */,
+				CEF320432E10003000072C6C /* BudCache */,
+				CEF320452E10003000072C6C /* Tools */,
 			);
 			productName = BudClientiOS;
 			productReference = CEA457862E0CFEF6008F5A0C /* BudClientiOS.app */;
@@ -214,7 +220,7 @@
 			mainGroup = CEA4577D2E0CFEF6008F5A0C;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CE6FE5082E0F10CB00F1A6BD /* XCLocalSwiftPackageReference "../BudClient" */,
+				CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CEA457872E0CFEF6008F5A0C /* Products */;
@@ -595,12 +601,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		CE6FE5082E0F10CB00F1A6BD /* XCLocalSwiftPackageReference "../BudClient" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../BudClient;
+/* Begin XCRemoteSwiftPackageReference section */
+		CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:mandooplz/budclient.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		CE6FE5092E0F10CB00F1A6BD /* BudClient */ = {
@@ -617,6 +627,16 @@
 		};
 		CEBD9F192E0D5E4300F05748 /* Tools */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = Tools;
+		};
+		CEF320432E10003000072C6C /* BudCache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */;
+			productName = BudCache;
+		};
+		CEF320452E10003000072C6C /* Tools */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */;
 			productName = Tools;
 		};
 /* End XCSwiftPackageProductDependency section */
