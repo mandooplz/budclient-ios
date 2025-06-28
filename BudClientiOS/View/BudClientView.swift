@@ -54,7 +54,7 @@ struct BudClientView: View {
 
 // MARK: Preview
 private struct BudClientPreview: View {
-    let budClientRef = BudClient(mode: .test)
+    let budClientRef = BudClient()
     
     var body: some View {
         BudClientView(budClientRef: budClientRef)

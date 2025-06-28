@@ -54,6 +54,7 @@ struct EmailFormView: View {
         }
         .padding()
         .task {
+            await emailFormRef.signInByCache()
         }
     }
     
@@ -65,28 +66,20 @@ struct EmailFormView: View {
     }
     
     var emailInput: some View {
-        TextField("Email", text: Binding(
-            get: { emailFormRef.email ?? "" },
-            set: { emailFormRef.email = $0 }
-        ))
-        .textContentType(.emailAddress)
-        .keyboardType(.emailAddress)
-        .autocapitalization(.none)
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
+        TextField("Email", text: $emailFormRef.email)
+            .textContentType(.emailAddress)
+            .keyboardType(.emailAddress)
+            .autocapitalization(.none)
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(8)
     }
     
     var passwordInput: some View {
-        SecureField("Password", text: Binding(
-            get: { emailFormRef.password ?? "" },
-            set: { emailFormRef.password = $0 }
-        ))
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
+        SecureField("Password", text: $emailFormRef.password)
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(8)
 
     }
-    
-    
 }
