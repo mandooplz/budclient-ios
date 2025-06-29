@@ -20,9 +20,12 @@ struct SignInFormView: View {
         self.signInFormRef = objectRef
     }
     
+    private let buttonCornerRadius: CGFloat = 25
+    
     // MARK: state
     @State private var isSigningIn = false
     @State private var isSigningInByCache = true
+    @State private var isSigningInWithGoogle = false
     
     
     // MARK: body
@@ -85,7 +88,7 @@ struct SignInFormView: View {
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.blue)
-                    .cornerRadius(8)
+                    .cornerRadius(buttonCornerRadius)
             } else {
                 Text("Sign In")
                     .bold()
@@ -93,25 +96,53 @@ struct SignInFormView: View {
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .cornerRadius(buttonCornerRadius)
             }
         }
         .disabled(isSigningIn)
     }
     var SignInWithGoogleButton: some View {
-        GoogleSignInButton {
+        Button(action: {
             Task {
+                isSigningInWithGoogle = true
+                defer { isSigningInWithGoogle = false }
                 guard let (idToken, accessToken) = await signInWithGoogle() else {
                     return
                 }
-                
                 guard let googleFormRef = signInFormRef.authBoard.ref?.googleForm?.ref else { return }
                 googleFormRef.idToken = idToken
                 googleFormRef.accessToken = accessToken
-                await googleFormRef.signIn()
+                await googleFormRef.signUpAndSignIn()
+            }
+        }) {
+            if isSigningInWithGoogle {
+                ProgressView()
+                    .frame(maxWidth: .infinity, minHeight: 50)
+                    .cornerRadius(buttonCornerRadius)
+            } else {
+                HStack {
+                    Image(systemName: "g.circle.fill")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(
+                            LinearGradient(gradient: Gradient(colors: [.red, .yellow, .blue, .green]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+
+                    Text("Sign in with Google")
+                        .foregroundColor(.black)
+                        .font(.system(size: 17, weight: .regular))
+                }
+                .frame(maxWidth: .infinity)
             }
         }
         .frame(height: 50)
+        .background(Color.white)
+        .cornerRadius(buttonCornerRadius)
+        .overlay(
+            RoundedRectangle(cornerRadius: buttonCornerRadius)
+                .stroke(Color.gray, lineWidth: 2)
+        )
+        .disabled(isSigningInWithGoogle)
         .padding(.bottom, 8)
     }
     var IssueLabel: some View {

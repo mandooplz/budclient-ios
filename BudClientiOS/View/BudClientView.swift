@@ -35,7 +35,7 @@ struct BudClientView: View {
             }
         }
         .task {
-            budClientRef.setUp()
+            await budClientRef.setUp()
         }
         .onChange(of: budClientRef.isIssueOccurred, {
             self.showAlert = true
