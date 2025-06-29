@@ -22,7 +22,12 @@ struct BudClientView: View {
                         .tabItem {
                             Label("Projects", systemImage: "folder")
                         }
-                    Text("ProfileBoard")
+                    
+                    ZStack {
+                        if let profileBoardRef = budClientRef.profileBoard?.ref {
+                            ProfileBoardView(profileBoardRef)
+                        }
+                    }
                         .tabItem {
                             Label("Profile", systemImage: "person.crop.circle")
                         }
@@ -48,4 +53,19 @@ struct BudClientView: View {
             )
         }
     }
+}
+
+
+
+// MARK: Preview
+private struct BudClientPreview: View {
+    let budClientRef = BudClient()
+    
+    var body: some View {
+        BudClientView(budClientRef: budClientRef)
+    }
+}
+
+#Preview {
+    BudClientPreview()
 }
