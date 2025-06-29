@@ -49,19 +49,3 @@ struct BudClientView: View {
         }
     }
 }
-
-
-
-// MARK: Preview
-private struct BudClientPreview: View {
-    let budClientRef = BudClient()
-    
-    var body: some View {
-        BudClientView(budClientRef: budClientRef)
-    }
-}
-
-#Preview {
-    BudClientPreview()
-}
-

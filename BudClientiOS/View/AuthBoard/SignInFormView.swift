@@ -12,27 +12,40 @@ import GoogleSignInSwift
 import BudServer
 
 
-struct EmailFormView: View {
+// MARK: view
+struct SignInFormView: View {
+    // MARK: core
     @Bindable var signInFormRef: SignInForm
-    @State private var isSigningIn = false
+    init(_ objectRef: SignInForm) {
+        self.signInFormRef = objectRef
+    }
     
+    // MARK: state
+    @State private var isSigningIn = false
+    @State private var isSigningInByCache = true
+    
+    
+    // MARK: body
     var body: some View {
         VStack(spacing: 20) {
-            Title
-            
-            EmailField
-            PasswordField
-
-            SignInButton
-            SignInWithGoogleButton
-
-            if signInFormRef.isIssueOccurred {
-                IssueLabel
+            if !isSigningInByCache {
+                Title
+                
+                EmailField
+                PasswordField
+                
+                SignInButton
+                SignInWithGoogleButton
+                
+                if signInFormRef.isIssueOccurred {
+                    IssueLabel
+                }
             }
         }
         .padding()
         .task {
-//            await signInFormRef.signInByCache()
+            await signInFormRef.signInByCache()
+            isSigningInByCache = false
         }
     }
     
@@ -92,7 +105,10 @@ struct EmailFormView: View {
                     return
                 }
                 
-                print(idToken, accessToken)
+                guard let googleFormRef = signInFormRef.authBoard.ref?.googleForm?.ref else { return }
+                googleFormRef.idToken = idToken
+                googleFormRef.accessToken = accessToken
+                await googleFormRef.signIn()
             }
         }
         .frame(height: 50)

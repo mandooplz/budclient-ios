@@ -10,12 +10,15 @@ import BudClient
 
 // MARK: View
 struct AuthBoardView: View {
+    // MARK: core
     @State var authBoardRef: AuthBoard
     
+    
+    // MARK: body
     var body: some View {
         ZStack {
             if let signInFormRef = authBoardRef.signInForm?.ref {
-                EmailFormView(signInFormRef: signInFormRef)
+                SignInFormView(signInFormRef)
             }
         }
         .task {
