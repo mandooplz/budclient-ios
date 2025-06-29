@@ -4,9 +4,12 @@
 //
 //  Created by 김민우 on 6/26/25.
 //
+import Foundation
 import SwiftUI
 import BudClient
 import Tools
+import GoogleSignIn
+import GoogleSignInSwift
 
 
 // MARK: Application
@@ -17,6 +20,9 @@ struct BudClientiOSApp: App {
     var body: some Scene {
         WindowGroup {
             BudClientView(budClientRef: budClientRef)
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }

@@ -14,6 +14,8 @@
 		CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F192E0D5E4300F05748 /* Tools */; };
 		CEF320442E10003000072C6C /* BudCache in Frameworks */ = {isa = PBXBuildFile; productRef = CEF320432E10003000072C6C /* BudCache */; };
 		CEF320462E10003000072C6C /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEF320452E10003000072C6C /* Tools */; };
+		CEF3204B2E10203000072C6C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3204A2E10203000072C6C /* GoogleSignIn */; };
+		CEF3204D2E10203000072C6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3204C2E10203000072C6C /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,9 +68,11 @@
 				CEF320462E10003000072C6C /* Tools in Frameworks */,
 				CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */,
 				CEF320442E10003000072C6C /* BudCache in Frameworks */,
+				CEF3204D2E10203000072C6C /* GoogleSignInSwift in Frameworks */,
 				CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */,
 				CE6FE50C2E0F10CB00F1A6BD /* Tools in Frameworks */,
 				CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */,
+				CEF3204B2E10203000072C6C /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +140,8 @@
 				CE6FE50B2E0F10CB00F1A6BD /* Tools */,
 				CEF320432E10003000072C6C /* BudCache */,
 				CEF320452E10003000072C6C /* Tools */,
+				CEF3204A2E10203000072C6C /* GoogleSignIn */,
+				CEF3204C2E10203000072C6C /* GoogleSignInSwift */,
 			);
 			productName = BudClientiOS;
 			productReference = CEA457862E0CFEF6008F5A0C /* BudClientiOS.app */;
@@ -221,6 +227,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */,
+				CEF320492E10203000072C6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CEA457872E0CFEF6008F5A0C /* Products */;
@@ -610,6 +617,14 @@
 				kind = branch;
 			};
 		};
+		CEF320492E10203000072C6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -638,6 +653,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */;
 			productName = Tools;
+		};
+		CEF3204A2E10203000072C6C /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF320492E10203000072C6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		CEF3204C2E10203000072C6C /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF320492E10203000072C6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

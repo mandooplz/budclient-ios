@@ -14,13 +14,12 @@ struct AuthBoardView: View {
     
     var body: some View {
         ZStack {
-            if let emailFormID = authBoardRef.emailForm,
-               let emailFormRef = EmailFormManager.get(emailFormID) {
-                EmailFormView(emailFormRef: emailFormRef)
+            if let signInFormRef = authBoardRef.signInForm?.ref {
+                EmailFormView(emailFormRef: signInFormRef)
             }
         }
         .task {
-            authBoardRef.setUpEmailForm()
+            authBoardRef.setUpForms()
         }
     }
 }
