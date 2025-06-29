@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE4293342E11605000C1F9B3 /* BudServer in Frameworks */ = {isa = PBXBuildFile; productRef = CE4293332E11605000C1F9B3 /* BudServer */; };
 		CE4A1DBF2E0F0911001254F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */; };
 		CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CE6FE5092E0F10CB00F1A6BD /* BudClient */; };
 		CE6FE50C2E0F10CB00F1A6BD /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CE6FE50B2E0F10CB00F1A6BD /* Tools */; };
@@ -42,9 +43,22 @@
 		CEA4579D2E0CFEF7008F5A0C /* BudClientiOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudClientiOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CE4293362E1164F400C1F9B3 /* Exceptions for "BudClientiOS" folder in "BudClientiOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CEA457852E0CFEF6008F5A0C /* BudClientiOS */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CEA457882E0CFEF6008F5A0C /* BudClientiOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CE4293362E1164F400C1F9B3 /* Exceptions for "BudClientiOS" folder in "BudClientiOS" target */,
+			);
 			path = BudClientiOS;
 			sourceTree = "<group>";
 		};
@@ -65,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4293342E11605000C1F9B3 /* BudServer in Frameworks */,
 				CEF320462E10003000072C6C /* Tools in Frameworks */,
 				CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */,
 				CEF320442E10003000072C6C /* BudCache in Frameworks */,
@@ -93,6 +108,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE4293322E11605000C1F9B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CEA4577D2E0CFEF6008F5A0C = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +123,7 @@
 				CEA457A02E0CFEF7008F5A0C /* BudClientiOSUITests */,
 				CEA457872E0CFEF6008F5A0C /* Products */,
 				CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */,
+				CE4293322E11605000C1F9B3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,6 +165,7 @@
 				CEF320452E10003000072C6C /* Tools */,
 				CEF3204A2E10203000072C6C /* GoogleSignIn */,
 				CEF3204C2E10203000072C6C /* GoogleSignInSwift */,
+				CE4293332E11605000C1F9B3 /* BudServer */,
 			);
 			productName = BudClientiOS;
 			productReference = CEA457862E0CFEF6008F5A0C /* BudClientiOS.app */;
@@ -435,6 +459,7 @@
 				DEVELOPMENT_TEAM = 3X262XJF5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BudClientiOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -466,6 +491,7 @@
 				DEVELOPMENT_TEAM = 3X262XJF5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BudClientiOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -628,6 +654,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE4293332E11605000C1F9B3 /* BudServer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */;
+			productName = BudServer;
+		};
 		CE6FE5092E0F10CB00F1A6BD /* BudClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BudClient;

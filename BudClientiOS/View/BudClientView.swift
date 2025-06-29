@@ -30,7 +30,7 @@ struct BudClientView: View {
             } else {
                 // AuthBoardView
                 if budClientRef.authBoard != nil {
-                    AuthBoardView(authBoardRef: AuthBoardManager.get(budClientRef.authBoard!)!)
+                    AuthBoardView(authBoardRef: budClientRef.authBoard!.ref!)
                 }
             }
         }

@@ -7,42 +7,44 @@
 import SwiftUI
 import BudClient
 import Tools
+import GoogleSignIn
 import GoogleSignInSwift
+import BudServer
 
 
 struct EmailFormView: View {
-    @Bindable var emailFormRef: EmailForm
+    @Bindable var signInFormRef: SignInForm
     @State private var isSigningIn = false
     
     var body: some View {
         VStack(spacing: 20) {
-            emailFormTitle
+            Title
             
-            emailInput
-            passwordInput
+            EmailField
+            PasswordField
 
-            signInButton
-            signInWithGoogleButton
+            SignInButton
+            SignInWithGoogleButton
 
-            if emailFormRef.isIssueOccurred {
-                issueLabel
+            if signInFormRef.isIssueOccurred {
+                IssueLabel
             }
         }
         .padding()
         .task {
-            await emailFormRef.signInByCache()
+//            await signInFormRef.signInByCache()
         }
     }
     
     
-    var emailFormTitle: some View {
+    // MARK: component
+    var Title: some View {
         Text("Sign In")
             .font(.title)
             .bold()
     }
-    
-    var emailInput: some View {
-        TextField("Email", text: $emailFormRef.email)
+    var EmailField: some View {
+        TextField("Email", text: $signInFormRef.email)
             .textContentType(.emailAddress)
             .keyboardType(.emailAddress)
             .autocapitalization(.none)
@@ -50,19 +52,18 @@ struct EmailFormView: View {
             .background(Color(.systemGray6))
             .cornerRadius(8)
     }
-    var passwordInput: some View {
-        SecureField("Password", text: $emailFormRef.password)
+    var PasswordField: some View {
+        SecureField("Password", text: $signInFormRef.password)
             .padding()
             .background(Color(.systemGray6))
             .cornerRadius(8)
 
     }
-    
-    var signInButton: some View {
+    var SignInButton: some View {
         Button(action: {
             Task {
                 isSigningIn = true
-                await emailFormRef.signIn()
+                await signInFormRef.signIn()
                 isSigningIn = false
             }
         }) {
@@ -84,23 +85,74 @@ struct EmailFormView: View {
         }
         .disabled(isSigningIn)
     }
-    
-    var signInWithGoogleButton: some View {
+    var SignInWithGoogleButton: some View {
         GoogleSignInButton {
-            // TODO: Handle Google Sign-In
-            print("Google Sign-In pressed")
+            Task {
+                guard let (idToken, accessToken) = await signInWithGoogle() else {
+                    return
+                }
+                
+                print(idToken, accessToken)
+            }
         }
         .frame(height: 50)
         .padding(.bottom, 8)
     }
-    
-    var issueLabel: some View {
-        Text(emailFormRef.issue?.reason ?? "Unknown error.")
+    var IssueLabel: some View {
+        Text(signInFormRef.issue?.reason ?? "Unknown error.")
             .foregroundColor(.red)
             .font(.caption)
+    }
+    
+    // MARK: Helpher
+    private func signInWithGoogle() async -> (idToken: String, accessToken: String)? {
+        await withCheckedContinuation { continuation in
+            guard let budClientRef = signInFormRef
+                .authBoard.ref?
+                .budClient.ref else {
+                return
+            }
+            
+            guard let clientId = budClientRef.budServerLink?.getGoogleClientId() else {
+                return
+            }
+            
+            let config = GIDConfiguration(clientID: clientId)
+            GIDSignIn.sharedInstance.configuration = config
+            
+            // 현재 윈도우에서 ViewController 가져오기
+            guard let rootViewController = (UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow })?
+                .rootViewController else {
+                return
+            }
+            
+            // Start the sign in flow!
+            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
+                guard error == nil else {
+                    print("구글 로그인 과정에서 에러가 발생했습니다.")
+                    continuation.resume(returning: nil)
+                    return
+                }
+
+                guard let user = result?.user,
+                      let idToken = user.idToken?.tokenString else {
+                    print("user와 idToken을 가져오는 과정에 에러가 발생했습니다. ")
+                    continuation.resume(returning: nil)
+                    return
+                }
+                
+                let accessToken = user.accessToken.tokenString
+                
+                continuation.resume(returning: (idToken, accessToken))
+            }
+        }
     }
 }
 
 
 private func handleGoogleSignIn() {
 }
+

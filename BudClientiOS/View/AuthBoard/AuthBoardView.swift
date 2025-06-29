@@ -15,11 +15,11 @@ struct AuthBoardView: View {
     var body: some View {
         ZStack {
             if let signInFormRef = authBoardRef.signInForm?.ref {
-                EmailFormView(emailFormRef: signInFormRef)
+                EmailFormView(signInFormRef: signInFormRef)
             }
         }
         .task {
-            authBoardRef.setUpForms()
+            await authBoardRef.setUpForms()
         }
     }
 }
