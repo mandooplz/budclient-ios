@@ -17,22 +17,22 @@ struct BudClientView: View {
     var body: some View {
         ZStack {
             if budClientRef.isUserSignedIn == false {
-                AuthBoardView(authBoardRef: budClientRef.authBoard?.ref)
+                SignIn(budClientRef)
             } else {
-                ProjectBoardView(budClientRef.projectBoard!.ref)
-                    .tabItem {
-                        Label("Project", systemImage: "folder")
+                TabView {
+                    Tab("Project", systemImage: "folder") {
+                        ProjectBoard(budClientRef)
                     }
-
-                CommunityView(budClientRef.community?.ref)
-                    .tabItem {
-                        Label("Community", systemImage: "person.3")
+                    
+                    Tab("Community", systemImage: "person.3") {
+                        Community(budClientRef)
                     }
-
-                ProfileBoardView(budClientRef.profileBoard?.ref)
-                .tabItem {
-                    Label("Profile", systemImage: "person.crop.circle")
+                    
+                    Tab("Profile", systemImage: "person.crop.circle") {
+                        ProfileBoard(budClientRef)
+                    }
                 }
+                
             }
         }
         .task {
@@ -44,6 +44,64 @@ struct BudClientView: View {
 
 
 // MARK: Component
+private struct SignIn: View {
+    let budClientRef: BudClient
+    init(_ budClientRef: BudClient) {
+        self.budClientRef = budClientRef
+    }
+    
+    var body: some View {
+        if let authBoardRef = budClientRef.authBoard?.ref {
+            AuthBoardView(authBoardRef: authBoardRef)
+        }
+    }
+}
+
+private struct ProjectBoard: View {
+    let budClientRef: BudClient
+    init(_ budClientRef: BudClient) {
+        self.budClientRef = budClientRef
+    }
+    
+    var body: some View {
+        ZStack {
+            if let projectBoardRef = budClientRef.projectBoard?.ref {
+                ProjectBoardView(projectBoardRef)
+            }
+        }
+    }
+}
+
+private struct Community: View {
+    let budClientRef: BudClient
+    init(_ budClientRef: BudClient) {
+        self.budClientRef = budClientRef
+    }
+    
+    var body: some View {
+        ZStack {
+            if let communityRef = budClientRef.community?.ref {
+                CommunityView(communityRef)
+            }
+        }
+    }
+}
+
+private struct ProfileBoard: View {
+    let budClientRef: BudClient
+    init(_ budClientRef: BudClient) {
+        self.budClientRef = budClientRef
+    }
+    
+    var body: some View {
+        ZStack {
+            if let profileBoardRef = budClientRef.profileBoard?.ref {
+                ProfileBoardView(profileBoardRef)
+            }
+        }
+    }
+}
+
 
 // MARK: Preview
 private struct BudClientPreview: View {

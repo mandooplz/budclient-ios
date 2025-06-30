@@ -11,15 +11,13 @@ import Tools
 
 // MARK: View
 struct ProjectBoardView: View {
-    var projectBoardRef: ProjectBoard?
+    var projectBoardRef: ProjectBoard
     
-    init(_ objectRef: ProjectBoard?) {
+    init(_ objectRef: ProjectBoard) {
         self.projectBoardRef = objectRef
     }
     
     var body: some View {
-        if let projectBoardRef {
-            Text("ProjectBoardView")
-        }
+        Text("This is ProjectBoard")
     }
 }

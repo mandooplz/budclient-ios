@@ -11,19 +11,17 @@ import Tools
 
 // MARK: View
 struct ProfileBoardView: View {
-    @State var profileBoardRef: ProfileBoard?
+    @State var profileBoardRef: ProfileBoard
     
-    init(_ objectRef: ProfileBoard?) {
+    init(_ objectRef: ProfileBoard) {
         self.profileBoardRef = objectRef
     }
     
     var body: some View {
-        if let profileBoardRef {
-            VStack {
-                Text("ProfileBoardView")
-                
-                SignOutButton(profileBoardRef)
-            }
+        VStack {
+            Text("ProfileBoardView")
+            
+            SignOutButton(profileBoardRef)
         }
     }
 }

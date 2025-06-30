@@ -121,12 +121,6 @@ struct SignInFormView: View {
                     .cornerRadius(buttonCornerRadius)
             } else {
                 HStack {
-                    Image(systemName: "g.circle.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(
-                            LinearGradient(gradient: Gradient(colors: [.red, .yellow, .blue, .green]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                        )
 
                     Text("Sign in with Google")
                         .foregroundColor(.black)

@@ -11,18 +11,18 @@ import BudClient
 // MARK: View
 struct AuthBoardView: View {
     // MARK: core
-    @State var authBoardRef: AuthBoard?
+    let authBoardRef: AuthBoard
     
     
     // MARK: body
     var body: some View {
         ZStack {
-            if let signInFormRef = authBoardRef?.signInForm?.ref {
+            if let signInFormRef = authBoardRef.signInForm?.ref {
                 SignInFormView(signInFormRef)
             }
         }
         .task {
-            await authBoardRef?.setUpForms()
+            await authBoardRef.setUpForms()
         }
     }
 }
