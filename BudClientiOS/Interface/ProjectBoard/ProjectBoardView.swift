@@ -23,27 +23,33 @@ struct ProjectBoardView: View {
             List {
                 ForEach(projectBoardRef.projects, id: \.value) { projectId in
                     if let project = projectId.ref {
-                        Text(project.name)
+                        ProjectView(project)
                     } else {
-                        Text("Unknown Project")
+                        Text("Loading...")
                     }
                 }
             }
             .task {
-                projectBoardRef.setUp()
-                await projectBoardRef.startObserving()
+                await projectBoardRef.setUpUpdater()
+                await projectBoardRef.subscribeProjectHub()
+                print("ProjectBoard task 완료")
             }
             .navigationTitle("Projects")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         Task {
-                            await projectBoardRef.createEmptyProject()
+                            await projectBoardRef.createProjectSource()
                             print(projectBoardRef.projects.count)
                         }
                     }) {
                         Image(systemName: "plus")
                     }
+                }
+            }
+            .onDisappear {
+                Task {
+                    await projectBoardRef.unsubscribeProjectHub()
                 }
             }
         }

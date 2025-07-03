@@ -37,6 +37,7 @@ struct BudClientView: View {
         }
         .task {
             await budClientRef.setUp()
+            print("BudClient Task 완료")
         }
     }
 }

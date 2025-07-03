@@ -109,7 +109,8 @@ struct SignInFormView: View {
                 guard let (idToken, accessToken) = await signInWithGoogle() else {
                     return
                 }
-                guard let googleFormRef = signInFormRef.authBoard.ref?.googleForm?.ref else { return }
+                
+                guard let googleFormRef = signInFormRef.tempConfig.parent.ref?.googleForm?.ref else { return }
                 googleFormRef.idToken = idToken
                 googleFormRef.accessToken = accessToken
                 await googleFormRef.signUpAndSignIn()
@@ -149,8 +150,8 @@ struct SignInFormView: View {
     private func signInWithGoogle() async -> (idToken: String, accessToken: String)? {
         await withCheckedContinuation { continuation in
             guard let budClientRef = signInFormRef
-                .authBoard.ref?
-                .budClient.ref else {
+                .tempConfig.parent.ref?
+                .tempConfig.parent.ref else {
                 return
             }
             
