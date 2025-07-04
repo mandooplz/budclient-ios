@@ -23,12 +23,19 @@ struct ProjectView: View {
             Text(projectRef.name ?? "Unknown")
             HStack {
                 TextField("Enter new name", text: $text)
+                
                 Button("Push") {
                     Task {
                         projectRef.name = text
                         await projectRef.push()
                     }
                 }.buttonStyle(.borderedProminent)
+                
+                Button("Remove") {
+                    Task {
+                        await projectRef.removeSource()
+                    }
+                }.buttonStyle(.glassProminent)
             }
             if let issue = projectRef.issue {
                 Text(issue.reason)
@@ -39,8 +46,8 @@ struct ProjectView: View {
             await projectRef.subscribeSource()
             print("Project task 완료")
         }.onDisappear {
-            print("ProjectView가 사라집니다.")
             Task {
+                print("ProjectView가 사라집니다.")
                 await projectRef.unsubscribeSource()
             }
         }
