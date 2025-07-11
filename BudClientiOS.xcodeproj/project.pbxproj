@@ -7,14 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE4293342E11605000C1F9B3 /* BudServer in Frameworks */ = {isa = PBXBuildFile; productRef = CE4293332E11605000C1F9B3 /* BudServer */; };
 		CE4A1DBF2E0F0911001254F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */; };
+		CE5CAD0C2E212B1A0097F80D /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CE5CAD0B2E212B1A0097F80D /* BudClient */; };
+		CE5CAD0E2E212B1A0097F80D /* Values in Frameworks */ = {isa = PBXBuildFile; productRef = CE5CAD0D2E212B1A0097F80D /* Values */; };
 		CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CE6FE5092E0F10CB00F1A6BD /* BudClient */; };
-		CE6FE50C2E0F10CB00F1A6BD /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CE6FE50B2E0F10CB00F1A6BD /* Tools */; };
 		CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F132E0D5E4300F05748 /* BudClient */; };
-		CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F192E0D5E4300F05748 /* Tools */; };
-		CEF320442E10003000072C6C /* BudCache in Frameworks */ = {isa = PBXBuildFile; productRef = CEF320432E10003000072C6C /* BudCache */; };
-		CEF320462E10003000072C6C /* Tools in Frameworks */ = {isa = PBXBuildFile; productRef = CEF320452E10003000072C6C /* Tools */; };
 		CEF3204B2E10203000072C6C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3204A2E10203000072C6C /* GoogleSignIn */; };
 		CEF3204D2E10203000072C6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3204C2E10203000072C6C /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
@@ -79,14 +76,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4293342E11605000C1F9B3 /* BudServer in Frameworks */,
-				CEF320462E10003000072C6C /* Tools in Frameworks */,
 				CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */,
-				CEF320442E10003000072C6C /* BudCache in Frameworks */,
 				CEF3204D2E10203000072C6C /* GoogleSignInSwift in Frameworks */,
+				CE5CAD0E2E212B1A0097F80D /* Values in Frameworks */,
+				CE5CAD0C2E212B1A0097F80D /* BudClient in Frameworks */,
 				CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */,
-				CE6FE50C2E0F10CB00F1A6BD /* Tools in Frameworks */,
-				CEBD9F1A2E0D5E4300F05748 /* Tools in Frameworks */,
 				CEF3204B2E10203000072C6C /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,14 +152,11 @@
 			name = BudClientiOS;
 			packageProductDependencies = (
 				CEBD9F132E0D5E4300F05748 /* BudClient */,
-				CEBD9F192E0D5E4300F05748 /* Tools */,
 				CE6FE5092E0F10CB00F1A6BD /* BudClient */,
-				CE6FE50B2E0F10CB00F1A6BD /* Tools */,
-				CEF320432E10003000072C6C /* BudCache */,
-				CEF320452E10003000072C6C /* Tools */,
 				CEF3204A2E10203000072C6C /* GoogleSignIn */,
 				CEF3204C2E10203000072C6C /* GoogleSignInSwift */,
-				CE4293332E11605000C1F9B3 /* BudServer */,
+				CE5CAD0B2E212B1A0097F80D /* BudClient */,
+				CE5CAD0D2E212B1A0097F80D /* Values */,
 			);
 			productName = BudClientiOS;
 			productReference = CEA457862E0CFEF6008F5A0C /* BudClientiOS.app */;
@@ -250,8 +241,8 @@
 			mainGroup = CEA4577D2E0CFEF6008F5A0C;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */,
 				CEF320492E10203000072C6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				CE5CAD0A2E212B1A0097F80D /* XCLocalSwiftPackageReference "../BudClient" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CEA457872E0CFEF6008F5A0C /* Products */;
@@ -634,15 +625,14 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:mandooplz/budclient.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		CE5CAD0A2E212B1A0097F80D /* XCLocalSwiftPackageReference "../BudClient" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../BudClient;
 		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
 		CEF320492E10203000072C6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -654,36 +644,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CE4293332E11605000C1F9B3 /* BudServer */ = {
+		CE5CAD0B2E212B1A0097F80D /* BudClient */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */;
-			productName = BudServer;
+			productName = BudClient;
+		};
+		CE5CAD0D2E212B1A0097F80D /* Values */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Values;
 		};
 		CE6FE5092E0F10CB00F1A6BD /* BudClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BudClient;
 		};
-		CE6FE50B2E0F10CB00F1A6BD /* Tools */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Tools;
-		};
 		CEBD9F132E0D5E4300F05748 /* BudClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BudClient;
-		};
-		CEBD9F192E0D5E4300F05748 /* Tools */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Tools;
-		};
-		CEF320432E10003000072C6C /* BudCache */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */;
-			productName = BudCache;
-		};
-		CEF320452E10003000072C6C /* Tools */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CEF320422E10003000072C6C /* XCRemoteSwiftPackageReference "budclient" */;
-			productName = Tools;
 		};
 		CEF3204A2E10203000072C6C /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;

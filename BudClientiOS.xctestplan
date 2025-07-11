@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "63C081F7-7B81-4BB3-913D-83BBE7A7C245",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:BudClientiOS.xcodeproj",
+      "identifier" : "CEA457852E0CFEF6008F5A0C",
+      "name" : "BudClientiOS"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:BudClientiOS.xcodeproj",
+        "identifier" : "CEA4579C2E0CFEF7008F5A0C",
+        "name" : "BudClientiOSUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:BudClientiOS.xcodeproj",
+        "identifier" : "CEA457922E0CFEF7008F5A0C",
+        "name" : "BudClientiOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -6,7 +6,7 @@
 //
 import SwiftUI
 import BudClient
-import Tools
+import Values
 import GoogleSignIn
 import GoogleSignInSwift
 import BudServer
@@ -106,11 +106,15 @@ struct SignInFormView: View {
             Task {
                 isSigningInWithGoogle = true
                 defer { isSigningInWithGoogle = false }
-                guard let (idToken, accessToken) = await signInWithGoogle() else {
+                guard let googleFormRef = signInFormRef.tempConfig.parent.ref?.googleForm?.ref else { return }
+                
+                await googleFormRef.fetchGoogleClientId()
+                guard let clientId = googleFormRef.googleClientId else { return }
+                
+                guard let (idToken, accessToken) = await signInWithGoogle(clientId: clientId) else {
                     return
                 }
                 
-                guard let googleFormRef = signInFormRef.tempConfig.parent.ref?.googleForm?.ref else { return }
                 googleFormRef.idToken = idToken
                 googleFormRef.accessToken = accessToken
                 await googleFormRef.signUpAndSignIn()
@@ -147,7 +151,7 @@ struct SignInFormView: View {
     }
     
     // MARK: Helpher
-    private func signInWithGoogle() async -> (idToken: String, accessToken: String)? {
+    private func signInWithGoogle(clientId: String) async -> (idToken: String, accessToken: String)? {
         await withCheckedContinuation { continuation in
             guard let budClientRef = signInFormRef
                 .tempConfig.parent.ref?
@@ -155,9 +159,6 @@ struct SignInFormView: View {
                 return
             }
             
-            guard let clientId = budClientRef.budServerLink?.getGoogleClientId() else {
-                return
-            }
             
             let config = GIDConfiguration(clientID: clientId)
             GIDSignIn.sharedInstance.configuration = config

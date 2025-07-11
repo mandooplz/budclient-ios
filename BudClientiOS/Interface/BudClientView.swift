@@ -6,7 +6,7 @@
 //
 import SwiftUI
 import BudClient
-import Tools
+import Values
 
 
 // MARK: View
@@ -37,7 +37,6 @@ struct BudClientView: View {
         }
         .task {
             await budClientRef.setUp()
-            print("BudClient Task 완료")
         }
     }
 }

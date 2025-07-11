@@ -6,41 +6,42 @@
 //
 import SwiftUI
 import BudClient
-import Tools
+import Values
 import os
 
 
 // MARK: View
 struct ProjectBoardView: View {
+    // MARK: state
     @Bindable var projectBoardRef: ProjectBoard
-    
     init(_ objectRef: ProjectBoard) {
         self.projectBoardRef = objectRef
     }
+    private let logger = Logger(subsystem: "BudClient", category: "ProjectBoardView")
     
+    // MARK: body
     var body: some View {
         NavigationStack {
             List {
-                ForEach(projectBoardRef.projects, id: \.value) { projectId in
+                ForEach(projectBoardRef.editors, id: \.value) { projectId in
                     if let project = projectId.ref {
-                        ProjectView(project)
+                        ProjectEditorView(project)
                     } else {
                         Text("Loading...")
                     }
                 }
             }
             .task {
-                await projectBoardRef.setUpUpdater()
-                await projectBoardRef.subscribeProjectHub()
-                print("ProjectBoard task 완료")
+                await WorkFlow.create {
+                    await projectBoardRef.subscribe()
+                }
             }
             .navigationTitle("Projects")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         Task {
-                            await projectBoardRef.createProjectSource()
-                            print(projectBoardRef.projects.count)
+                            await projectBoardRef.createNewProject()
                         }
                     }) {
                         Image(systemName: "plus")
@@ -49,7 +50,7 @@ struct ProjectBoardView: View {
             }
             .onDisappear {
                 Task {
-                    await projectBoardRef.unsubscribeProjectHub()
+                    await projectBoardRef.unsubscribe()
                 }
             }
         }
