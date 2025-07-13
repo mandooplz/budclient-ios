@@ -12,11 +12,14 @@ import os
 
 // MARK: View
 struct ProjectBoardView: View {
-    // MARK: state
+    // MARK: core
     @Bindable var projectBoardRef: ProjectBoard
     init(_ objectRef: ProjectBoard) {
         self.projectBoardRef = objectRef
     }
+    
+    // MARK: state
+    
     
     // MARK: body
     var body: some View {
@@ -26,6 +29,16 @@ struct ProjectBoardView: View {
                     NavigationLink(value: projectEditor) {
                         if let projectEditorRef = projectEditor.ref {
                             ProjectEditorLabel(projectEditorRef)
+                        }
+                    }
+                }
+                // edit list
+                .onDelete { projectEditorSet in
+                    Task {
+                        await WorkFlow {
+                            for projectEditor in projectEditorSet {
+                                await projectBoardRef.editors[projectEditor].ref?.removeProject()
+                            }
                         }
                     }
                 }
@@ -40,7 +53,11 @@ struct ProjectBoardView: View {
             // navigation
             .navigationTitle("Projects")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         Task {
                             await WorkFlow {

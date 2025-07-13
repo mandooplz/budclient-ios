@@ -133,7 +133,9 @@ extension SignInFormView {
                 // 사용자 경험에 더 좋습니다. (성공/실패 분기 처리)
                 // defer { isSigningInWithGoogle = false }
                 
-                guard let googleFormRef = signInFormRef.tempConfig.parent.ref?.googleForm?.ref else {
+                await signInFormRef.setUpGoogleForm()
+                
+                guard let googleFormRef = signInFormRef.googleForm?.ref else {
                     isSigningInWithGoogle = false
                     return
                 }
