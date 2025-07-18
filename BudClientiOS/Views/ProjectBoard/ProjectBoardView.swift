@@ -8,7 +8,6 @@ import SwiftUI
 import BudClient
 import Values
 import Collections
-import os
 
 
 // MARK: View
@@ -27,7 +26,7 @@ struct ProjectBoardView: View {
         NavigationStack {
             List {
                 ForEach(projectBoardRef.projects.values, id: \.value) { projectModel in
-                    NavigationLink(value: projectModel) {
+                    NavigationLink(value: projectModel as ProjectModel.ID) {
                         if let projectModelRef = projectModel.ref {
                             ProjectEditorLabel(projectModelRef)
                         }

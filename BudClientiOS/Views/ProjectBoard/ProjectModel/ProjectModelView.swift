@@ -47,6 +47,11 @@ struct ProjectModelView: View {
         
         // navigation
         .navigationTitle(projectModelRef.name)
+        .navigationDestination(for: SystemModel.ID.self) { systemModel in
+            if systemModel.isExist {
+                SystemModelView(systemModel.ref!)
+            }
+        }
     }
 }
 
@@ -60,23 +65,6 @@ extension ProjectModelView {
                     if systemModel.isExist {
                         SystemModelLabel(systemModel.ref!)
                     }
-                }
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                EditButton()
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(action: {
-                    Task {
-                        await WorkFlow {
-                            await projectModelRef.createSystem()
-                        }
-                    }
-                }) {
-                    Image(systemName: "plus")
                 }
             }
         }

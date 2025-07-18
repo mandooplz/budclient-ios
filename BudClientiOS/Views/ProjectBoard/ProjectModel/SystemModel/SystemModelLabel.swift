@@ -25,28 +25,15 @@ struct SystemModelLabel: View {
     // MARK: body
     var body: some View {
         LabelContent
-            .padding(25)
-            .background(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color(uiColor: .secondarySystemGroupedBackground))
-                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
-            )
-            .overlay(addButton(for: .top))
-            .overlay(addButton(for: .bottom))
-            .overlay(addButton(for: .leading))
-            .overlay(addButton(for: .trailing))
-            // MARK: iOS 최적화 3. 컨텍스트 메뉴 추가
-            .contextMenu {
-                // 이름 변경, 복제 등 추가 액션을 넣을 수 있습니다.
-                Button(role: .destructive) {
-                    Task {
-                        await systemModelRef.removeSystem()
-                        // Board에서 실제 데이터 제거 로직 호출 필요
-                    }
-                } label: {
-                    Label("Remove System", systemImage: "trash")
-                }
-            }
+        // remove
+        .contextMenu {
+            AddSystemUpButton
+            AddSystemDownButton
+            AddSystemRightButton
+            AddSystemLeftButton
+            
+            RemoveButton
+        }
     }
 }
 
@@ -54,7 +41,7 @@ struct SystemModelLabel: View {
 // MARK: Component
 extension SystemModelLabel {
     var LabelContent: some View {
-        VStack(spacing: 4) {
+        VStack(alignment: .leading) {
             Text(systemModelRef.name)
                 .font(.headline)
                 .fontWeight(.bold)
@@ -65,37 +52,68 @@ extension SystemModelLabel {
         }
     }
     
-    @ViewBuilder
-    private func addButton(for edge: Edge) -> some View {
-        ZStack(alignment: .center) {
-            Color.clear // 전체 영역을 차지하여 alignment가 동작하도록 함
-            
-            Button(action: {
-                // MARK: iOS 최적화 2. 햅틱 피드백 호출
+    var AddSystemUpButton: some View {
+        // addSystemUp
+        Button {
+            Task {
                 triggerHapticFeedback()
-                
-                Task {
-                    await performAddAction(for: edge)
+                await WorkFlow {
+                    await systemModelRef.addSystemTop()
                 }
-            }) {
-                Image(systemName: "plus.circle.fill")
-                    .font(.title2)
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(.white, .tint) // .blue 대신 .accentColor 사용
-                    .background(Circle().fill(.white))
             }
-            .buttonStyle(.plain)
-            // MARK: iOS 최적화 1. onHover 제거, 버튼을 항상 보이도록 함
+        } label: {
+            Label("Add System Top", systemImage: "arrow.up")
         }
     }
-    
-    /// 방향에 맞는 모델 액션을 실행하는 헬퍼 함수
-    private func performAddAction(for edge: Edge) async {
-        switch edge {
-        case .top:    await systemModelRef.addSystemTop()
-        case .bottom: await systemModelRef.addSystemBottom()
-        case .leading: await systemModelRef.addSystemLeft()
-        case .trailing: await systemModelRef.addSystemRight()
+    var AddSystemDownButton: some View {
+        // addSystemUp
+        Button {
+            Task {
+                triggerHapticFeedback()
+                await WorkFlow {
+                    await systemModelRef.addSystemBottom()
+                }
+            }
+        } label: {
+            Label("Add System Down", systemImage: "arrow.down")
+        }
+    }
+    var AddSystemLeftButton: some View {
+        // addSystemUp
+        Button {
+            Task {
+                triggerHapticFeedback()
+                await WorkFlow {
+                    await systemModelRef.addSystemLeft()
+                }
+            }
+        } label: {
+            Label("Add System Left", systemImage: "arrow.left")
+        }
+    }
+    var AddSystemRightButton: some View {
+        // addSystemUp
+        Button {
+            Task {
+                triggerHapticFeedback()
+                await WorkFlow {
+                    await systemModelRef.addSystemRight()
+                }
+            }
+        } label: {
+            Label("Add System Right", systemImage: "arrow.right")
+        }
+    }
+    var RemoveButton: some View {
+        // remove
+        Button(role: .destructive) {
+            Task {
+                await WorkFlow {
+                    await systemModelRef.removeSystem()
+                }
+            }
+        } label: {
+            Label("Remove System", systemImage: "trash")
         }
     }
     
