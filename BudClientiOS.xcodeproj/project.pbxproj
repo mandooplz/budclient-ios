@@ -65,6 +65,16 @@
 		CEA4579D2E0CFEF7008F5A0C /* BudClientiOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudClientiOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CEABCE172E2AD0750091ADDD /* Exceptions for "BudClientiOS" folder in "BudClientiOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CEA457852E0CFEF6008F5A0C /* BudClientiOS */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CE17C3A72E23F41D0021B22C /* BudClientUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -73,6 +83,9 @@
 		};
 		CEA457882E0CFEF6008F5A0C /* BudClientiOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CEABCE172E2AD0750091ADDD /* Exceptions for "BudClientiOS" folder in "BudClientiOS" target */,
+			);
 			path = BudClientiOS;
 			sourceTree = "<group>";
 		};
