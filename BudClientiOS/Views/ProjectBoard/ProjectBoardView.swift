@@ -28,7 +28,7 @@ struct ProjectBoardView: View {
                 ForEach(projectBoardRef.projects.values, id: \.value) { projectModel in
                     NavigationLink(value: projectModel as ProjectModel.ID) {
                         if let projectModelRef = projectModel.ref {
-                            ProjectEditorLabel(projectModelRef)
+                            ProjectModelLabel(projectModelRef)
                         }
                     }
                 }

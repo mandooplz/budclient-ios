@@ -44,7 +44,12 @@ struct ProjectModelView: View {
                 await projectModelRef.startUpdating()
             }
         }
-        
+        .onChange(of: ProjectModelManager.isExist(projectModelRef.id), { oldValue, newValue in
+            print(oldValue, newValue)
+            
+            dismiss()
+        })
+
         // navigation
         .navigationTitle(projectModelRef.name)
         .navigationDestination(for: SystemModel.ID.self) { systemModel in

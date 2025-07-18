@@ -10,7 +10,7 @@ import Values
 
 
 // MARK: View
-struct ProjectEditorLabel: View {
+struct ProjectModelLabel: View {
     let projectModelRef: ProjectModel
     init(_ projectModelRef: ProjectModel) {
         self.projectModelRef = projectModelRef
@@ -22,7 +22,7 @@ struct ProjectEditorLabel: View {
     }
 }
 
-extension ProjectEditorLabel {
+extension ProjectModelLabel {
     struct EditableTitle: View {
         // MARK: core
         @Bindable var projectModelRef: ProjectModel
