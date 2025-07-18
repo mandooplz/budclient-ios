@@ -7,6 +7,7 @@
 import SwiftUI
 import BudClient
 import Values
+import Collections
 
 
 // MARK: View
@@ -39,7 +40,7 @@ struct SystemModelLabel: View {
                 // 이름 변경, 복제 등 추가 액션을 넣을 수 있습니다.
                 Button(role: .destructive) {
                     Task {
-                        await systemModelRef.remove()
+                        await systemModelRef.removeSystem()
                         // Board에서 실제 데이터 제거 로직 호출 필요
                     }
                 } label: {
@@ -114,9 +115,8 @@ private struct SystemModelLabelPreview: View {
     
     var body: some View {
         if let projectBoardRef = budClientRef.projectBoard?.ref,
-           let projectEditorRef = projectBoardRef.editors.first?.ref,
-           let systemBoardRef = projectEditorRef.systemBoard?.ref {
-            SystemBoardView(systemBoardRef)
+           let projectModelRef = projectBoardRef.projects.values.first?.ref {
+            ProjectModelView(projectModelRef)
         } else {
             ProgressView("SystemModelLabelPreview")
                 .task {
@@ -129,10 +129,7 @@ private struct SystemModelLabelPreview: View {
     
     func signUp() async {
         await budClientRef.setUp()
-        let authBoardRef = budClientRef.authBoard!.ref!
-        
-        await authBoardRef.setUpForms()
-        let signInFormRef = authBoardRef.signInForm!.ref!
+        let signInFormRef = budClientRef.signInForm!.ref!
         
         await signInFormRef.setUpSignUpForm()
         let signUpFormRef = signInFormRef.signUpForm!.ref!
@@ -150,50 +147,34 @@ private struct SystemModelLabelPreview: View {
         // create ProjectEditor
         let projectBoardRef = budClientRef.projectBoard!.ref!
         
+        await projectBoardRef.startUpdating()
         await withCheckedContinuation { con in
             Task {
                 projectBoardRef.setCallback {
                     con.resume()
                 }
                 
-                await projectBoardRef.subscribe()
-                await projectBoardRef.createNewProject()
+                await projectBoardRef.createProject()
             }
         }
         
-        await projectBoardRef.unsubscribe()
-        projectBoardRef.setCallback { }
-        await projectBoardRef.subscribe()
-        
-        guard let projectEditorRef = projectBoardRef.editors.first?.ref else{
-            print("ProjectEditor를 찾을 수 없습니다.")
+        guard let projectModelRef = projectBoardRef.projects.values.first?.ref else{
+            print("ProjectModel을 찾을 수 없습니다.")
             return
         }
         
-        
-        // create SystemBoard
-        await projectEditorRef.setUp()
-        
-        guard let systemBoardRef = projectEditorRef.systemBoard?.ref else {
-            print("SystemBoard를 찾을 수 없습니다.")
-            return
-        }
         
         // create SystemModel
+        await projectModelRef.startUpdating()
         await withCheckedContinuation { continuation in
             Task {
-                systemBoardRef.setCallback {
+                projectModelRef.setCallback {
                     continuation.resume()
                 }
                 
-                await systemBoardRef.subscribe()
-                await systemBoardRef.createFirstSystem()
+                await projectModelRef.createSystem()
             }
         }
-        
-        await systemBoardRef.unsubscribe()
-        systemBoardRef.setCallback { }
-        await systemBoardRef.subscribe()
     }
 }
 

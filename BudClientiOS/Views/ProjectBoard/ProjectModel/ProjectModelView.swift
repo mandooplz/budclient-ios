@@ -1,8 +1,8 @@
 //
-//  SystemBoardView.swift
+//  ProjectModelView.swift
 //  BudClientiOS
 //
-//  Created by 김민우 on 7/14/25.
+//  Created by 김민우 on 7/4/25.
 //
 import SwiftUI
 import BudClient
@@ -11,23 +11,26 @@ import Collections
 
 
 // MARK: View
-struct SystemBoardView: View {
+struct ProjectModelView: View {
     // MARK: core
-    let systemBoardRef: SystemBoard
-    init(_ systemBoardRef: SystemBoard) {
-        self.systemBoardRef = systemBoardRef
+    let projectModelRef: ProjectModel
+    init(_ projectModelRef: ProjectModel) {
+        self.projectModelRef = projectModelRef
     }
     
+    
     // MARK: state
+    @Environment(\.dismiss) private var dismiss
+    
     
     // MARK: body
     var body: some View {
-        Group {
-            if systemBoardRef.models.isEmpty {
+        ZStack {
+            if projectModelRef.systems.isEmpty {
                 EmptySystemView {
                     Task {
                         await WorkFlow {
-                            await systemBoardRef.createFirstSystem()
+                            await projectModelRef.createSystem()
                         }
                     }
                 }
@@ -35,24 +38,24 @@ struct SystemBoardView: View {
                 SystemModelList
             }
         }
-        // lifecycke
+        // lifecycle
         .task {
-            await systemBoardRef.subscribe()
+            await WorkFlow {
+                await projectModelRef.startUpdating()
+            }
         }
         
         // navigation
-        .navigationDestination(for: SystemModel.ID.self) { systemModel in
-            if systemModel.isExist {
-                SystemModelView(systemModel.ref!)
-            }
-        }
+        .navigationTitle(projectModelRef.name)
     }
 }
 
-extension SystemBoardView {
+
+// MARK: Components
+extension ProjectModelView {
     var SystemModelList: some View {
         List {
-            ForEach(systemBoardRef.models.values, id: \.value) { systemModel in
+            ForEach(projectModelRef.systems.values, id: \.value) { systemModel in
                 NavigationLink(value: systemModel) {
                     if systemModel.isExist {
                         SystemModelLabel(systemModel.ref!)
@@ -69,7 +72,7 @@ extension SystemBoardView {
                 Button(action: {
                     Task {
                         await WorkFlow {
-                            await systemBoardRef.createFirstSystem()
+                            await projectModelRef.createSystem()
                         }
                     }
                 }) {
@@ -112,32 +115,26 @@ extension SystemBoardView {
 }
 
 
-// MARK: Preview
-private struct SystemBoardPreview: View {
+
+// MARK: ProjectEditorPreview
+private struct ProjectModelPreview: View {
     let budClientRef = BudClient()
     
     var body: some View {
-        if let projectBoardRef = budClientRef.projectBoard?.ref,
-           let projectEditorRef = projectBoardRef.editors.first?.ref,
-           let systemBoardRef = projectEditorRef.systemBoard?.ref {
-            NavigationStack {
-                SystemBoardView(systemBoardRef)
-            }
+        if let projectBoardRef = budClientRef.projectBoard?.ref {
+            ProjectBoardView(projectBoardRef)
         } else {
-            ProgressView("SystemBoardPreview")
+            ProgressView("ProjectEditorPreview")
                 .task {
                     await signUp()
-                    await createSystemBoard()
+                    await createProjectModel()
                 }
         }
     }
     
     func signUp() async {
         await budClientRef.setUp()
-        let authBoardRef = budClientRef.authBoard!.ref!
-        
-        await authBoardRef.setUpForms()
-        let signInFormRef = authBoardRef.signInForm!.ref!
+        let signInFormRef = budClientRef.signInForm!.ref!
         
         await signInFormRef.setUpSignUpForm()
         let signUpFormRef = signInFormRef.signUpForm!.ref!
@@ -151,37 +148,12 @@ private struct SystemBoardPreview: View {
         
         await signUpFormRef.signUp()
     }
-    func createSystemBoard() async {
-        // create ProjectEditor
+    func createProjectModel() async {
         let projectBoardRef = budClientRef.projectBoard!.ref!
         
-        await withCheckedContinuation { con in
-            Task {
-                projectBoardRef.setCallback {
-                    con.resume()
-                }
-                
-                await projectBoardRef.subscribe()
-                await projectBoardRef.createNewProject()
-            }
-        }
-        
-        await projectBoardRef.unsubscribe()
-        projectBoardRef.setCallback { }
-        await projectBoardRef.subscribe()
-        
-        guard let projectEditorRef = projectBoardRef.editors.first?.ref else{
-            print("ProjectEditor를 찾을 수 없습니다.")
-            return
-        }
-        
-        
-        // create SystemBoard
-        await projectEditorRef.setUp()
+        await projectBoardRef.startUpdating()
+        await projectBoardRef.createProject()
     }
 }
 
-
-#Preview {
-    SystemBoardPreview()
-}
+#Preview { ProjectModelPreview() }

@@ -21,6 +21,7 @@ struct BudClientiOSApp: App {
     var body: some Scene {
         WindowGroup {
             BudClientView(budClientRef)
+                .environment(budClientRef)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }
@@ -39,10 +40,7 @@ struct BudClientiOSApp: App {
 // MARK: Helphers
 private func signUp(budClientRef: BudClient) async {
     await budClientRef.setUp()
-    let authBoardRef = budClientRef.authBoard!.ref!
-    
-    await authBoardRef.setUpForms()
-    let signInFormRef = authBoardRef.signInForm!.ref!
+    let signInFormRef = budClientRef.signInForm!.ref!
     
     await signInFormRef.setUpSignUpForm()
     let signUpFormRef = signInFormRef.signUpForm!.ref!

@@ -15,6 +15,7 @@ import BudServer
 // MARK: view
 struct SignInFormView: View {
     // MARK: core
+    @Environment(BudClient.self) var budClientRef
     @Bindable var signInFormRef: SignInForm
     init(_ signInFormRef: SignInForm) {
         self.signInFormRef = signInFormRef
@@ -100,6 +101,7 @@ extension SignInFormView {
                 isSigningIn = true
                 await WorkFlow {
                     await signInFormRef.signIn()
+                    await budClientRef.saveUserInCache()
                 }
                 isSigningIn = false
             }
@@ -154,6 +156,7 @@ extension SignInFormView {
                 googleFormRef.idToken = idToken
                 googleFormRef.accessToken = accessToken
                 await googleFormRef.signUpAndSignIn()
+                await budClientRef.saveUserInCache()
                 
                 isSigningInWithGoogle = false // 모든 작업이 끝나면 false로 변경
             }
@@ -258,8 +261,7 @@ private struct SignInFormPreview: View {
     @State var budClientRef = BudClient()
     
     var body: some View {
-        if let authBoardRef = budClientRef.authBoard?.ref,
-           let signInFormRef = authBoardRef.signInForm?.ref {
+        if let signInFormRef = budClientRef.signInForm?.ref {
             SignInFormView(signInFormRef)
         } else if budClientRef.isUserSignedIn {
             Text("Signed In!")
@@ -277,9 +279,6 @@ private struct SignInFormPreview: View {
     
     func setUp() async {
         await budClientRef.setUp()
-        
-        guard let authBoardRef = budClientRef.authBoard?.ref else { return }
-        await authBoardRef.setUpForms()
     }
 }
 

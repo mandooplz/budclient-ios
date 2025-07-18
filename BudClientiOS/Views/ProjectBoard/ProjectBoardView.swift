@@ -7,6 +7,7 @@
 import SwiftUI
 import BudClient
 import Values
+import Collections
 import os
 
 
@@ -25,19 +26,21 @@ struct ProjectBoardView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(projectBoardRef.editors, id: \.value) { projectEditor in
-                    NavigationLink(value: projectEditor) {
-                        if let projectEditorRef = projectEditor.ref {
-                            ProjectEditorLabel(projectEditorRef)
+                ForEach(projectBoardRef.projects.values, id: \.value) { projectModel in
+                    NavigationLink(value: projectModel) {
+                        if let projectModelRef = projectModel.ref {
+                            ProjectEditorLabel(projectModelRef)
                         }
                     }
                 }
                 // edit list
-                .onDelete { projectEditorSet in
+                .onDelete { indexSet in
                     Task {
                         await WorkFlow {
-                            for projectEditor in projectEditorSet {
-                                await projectBoardRef.editors[projectEditor].ref?.removeProject()
+                            for index in indexSet {
+                                let projectModel = await projectBoardRef.projects.values[index]
+                                
+                                await projectModel.ref?.removeProject()
                             }
                         }
                     }
@@ -46,7 +49,7 @@ struct ProjectBoardView: View {
             // lifecycle
             .task {
                 await WorkFlow {
-                    await projectBoardRef.subscribe()
+                    await projectBoardRef.startUpdating()
                 }
             }
             
@@ -61,7 +64,7 @@ struct ProjectBoardView: View {
                     Button(action: {
                         Task {
                             await WorkFlow {
-                                await projectBoardRef.createNewProject()
+                                await projectBoardRef.createProject()
                             }
                         }
                     }) {
@@ -69,9 +72,9 @@ struct ProjectBoardView: View {
                     }
                 }
             }
-            .navigationDestination(for: ProjectEditor.ID.self) { projectEditor in
-                if let projectEditorRef = projectEditor.ref {
-                    ProjectEditorView(projectEditorRef)
+            .navigationDestination(for: ProjectModel.ID.self) { projectModel in
+                if let projectModelRef = projectModel.ref {
+                    ProjectModelView(projectModelRef)
                 }
             }
             
@@ -100,10 +103,7 @@ private struct ProjectBoardPreview: View {
     
     func setUp() async {
         await budClientRef.setUp()
-        let authBoardRef = budClientRef.authBoard!.ref!
-        
-        await authBoardRef.setUpForms()
-        let signInFormRef = authBoardRef.signInForm!.ref!
+        let signInFormRef = budClientRef.signInForm!.ref!
         
         await signInFormRef.setUpSignUpForm()
         let signUpFormRef = signInFormRef.signUpForm!.ref!

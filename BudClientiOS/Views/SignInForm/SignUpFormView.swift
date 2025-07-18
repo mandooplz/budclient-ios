@@ -12,6 +12,7 @@ import Values
 // MARK: View
 struct SignUpFormView: View {
     // MARK: Core
+    @Environment(BudClient.self) var budClientRef
     @Bindable var signUpFormRef: SignUpForm
     init(_ signUpFormRef: SignUpForm) {
         self.signUpFormRef = signUpFormRef
@@ -84,6 +85,7 @@ extension SignUpFormView {
             Task {
                 isSigningUp = true
                 await signUpFormRef.signUp()
+                await budClientRef.saveUserInCache()
                 isSigningUp = false
             }
         }) {
@@ -138,11 +140,10 @@ private struct SignUpFormPreview: View {
     let budClientRef = BudClient()
     
     var body: some View {
-        if let authBoardRef = budClientRef.authBoard?.ref,
-           let signInFormRef = authBoardRef.signInForm?.ref {
+        if let signInFormRef = budClientRef.signInForm?.ref {
             SignInFormView(signInFormRef)
                 .task {
-                    await setUpSignInForm()
+                    await setUpSignUpForm()
             }
         } else {
             if budClientRef.isUserSignedIn {
@@ -150,24 +151,14 @@ private struct SignUpFormPreview: View {
             } else {
                 ProgressView("SignUpFormPreview")
                     .task {
-                        await setUp()
+                        await budClientRef.setUp()
                     }
             }
         }
     }
     
-    func setUp() async {
-        await budClientRef.setUp()
-        
-        guard let authBoardRef = budClientRef.authBoard?.ref else { return }
-        await authBoardRef.setUpForms()
-    }
-    
-    func setUpSignInForm() async {
-        guard let authBoardRef = budClientRef.authBoard?.ref else { return }
-        await authBoardRef.setUpForms()
-        
-        guard let signInFormRef = authBoardRef.signInForm?.ref else { return }
+    func setUpSignUpForm() async {
+        guard let signInFormRef = budClientRef.signInForm?.ref else { return }
         await signInFormRef.setUpSignUpForm()
     }
 }

@@ -24,9 +24,9 @@ struct BudClientView: View {
     var body: some View {
         ZStack {
             if budClientRef.isUserSignedIn == false,
-               let authBoardRef = budClientRef.authBoard?.ref {
+               let signInFormRef = budClientRef.signInForm?.ref {
                 
-                AuthBoardView(authBoardRef)
+                SignInFormView(signInFormRef)
                 
             } else if let projectBoardRef = budClientRef.projectBoard?.ref,
                       let communityRef = budClientRef.community?.ref,

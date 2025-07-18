@@ -69,10 +69,7 @@ private struct ProfileBoardPreview: View {
     
     func setUp() async {
         await budClientRef.setUp()
-        let authBoardRef = budClientRef.authBoard!.ref!
-        
-        await authBoardRef.setUpForms()
-        let signInFormRef = authBoardRef.signInForm!.ref!
+        let signInFormRef = budClientRef.signInForm!.ref!
         
         await signInFormRef.setUpSignUpForm()
         let signUpFormRef = signInFormRef.signUpForm!.ref!

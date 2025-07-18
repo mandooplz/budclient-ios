@@ -11,13 +11,13 @@ import Values
 
 // MARK: View
 struct ProjectEditorLabel: View {
-    let projectEditorRef: ProjectEditor
-    init(_ projectEditorRef: ProjectEditor) {
-        self.projectEditorRef = projectEditorRef
+    let projectModelRef: ProjectModel
+    init(_ projectModelRef: ProjectModel) {
+        self.projectModelRef = projectModelRef
     }
     
     var body: some View {
-        EditableTitle(projectEditorRef)
+        EditableTitle(projectModelRef)
             .padding(.horizontal)
     }
 }
@@ -25,9 +25,9 @@ struct ProjectEditorLabel: View {
 extension ProjectEditorLabel {
     struct EditableTitle: View {
         // MARK: core
-        @Bindable var projectEditorRef: ProjectEditor
-        init(_ projectEditorRef: ProjectEditor) {
-            self.projectEditorRef = projectEditorRef
+        @Bindable var projectModelRef: ProjectModel
+        init(_ projectModelRef: ProjectModel) {
+            self.projectModelRef = projectModelRef
         }
         
         // MARK: state
@@ -39,19 +39,19 @@ extension ProjectEditorLabel {
             // isEditing 상태에 따라 Text 또는 TextField를 보여줌
             Group {
                 if isEditing {
-                    TextField("Enter new name", text: $projectEditorRef.nameInput)
+                    TextField("Enter new name", text: $projectModelRef.nameInput)
                         .textFieldStyle(.plain)
                         .focused($isTextFieldFocused)   // 포커스 상태와 바인딩
                         .onSubmit {
                             // 'Return' 키를 누르면 실행될 액션
                             Task {
                                 await WorkFlow {
-                                    await projectEditorRef.pushName()
+                                    await projectModelRef.pushName()
                                 }
                             }
                         }
                 } else {
-                    Text(projectEditorRef.name)
+                    Text(projectModelRef.name)
                         .onTapGesture {
                             // 텍스트를 탭하면 편집 모드로 전환
                             // 현재 이름을 text 상태에 복사하여 편집 시작
@@ -64,7 +64,7 @@ extension ProjectEditorLabel {
             .onDisappear {
                 Task {
                     await WorkFlow {
-                        await projectEditorRef.pushName()
+                        await projectModelRef.pushName()
                     }
                 }
             }
@@ -91,10 +91,7 @@ private struct ProjectEditorLabelPreview: View {
     
     func signUp() async {
         await budClientRef.setUp()
-        let authBoardRef = budClientRef.authBoard!.ref!
-        
-        await authBoardRef.setUpForms()
-        let signInFormRef = authBoardRef.signInForm!.ref!
+        let signInFormRef = budClientRef.signInForm!.ref!
         
         await signInFormRef.setUpSignUpForm()
         let signUpFormRef = signInFormRef.signUpForm!.ref!
@@ -111,8 +108,8 @@ private struct ProjectEditorLabelPreview: View {
     func createProjectEditor() async {
         let projectBoardRef = budClientRef.projectBoard!.ref!
         
-        await projectBoardRef.subscribe()
-        await projectBoardRef.createNewProject()
+        await projectBoardRef.startUpdating()
+        await projectBoardRef.createProject()
     }
 }
 
