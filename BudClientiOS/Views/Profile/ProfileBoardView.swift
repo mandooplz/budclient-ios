@@ -12,8 +12,8 @@ import Values
 // MARK: View
 struct ProfileBoardView: View {
     // MARK: core
-    let profileBoardRef: ProfileBoard
-    init(_ profileBoardRef: ProfileBoard) {
+    let profileBoardRef: Profile
+    init(_ profileBoardRef: Profile) {
         self.profileBoardRef = profileBoardRef
     }
     
