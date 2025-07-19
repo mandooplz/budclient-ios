@@ -25,15 +25,21 @@ struct SystemModelLabel: View {
     // MARK: body
     var body: some View {
         LabelContent
-        // remove
-        .contextMenu {
-            AddSystemUpButton
-            AddSystemDownButton
-            AddSystemRightButton
-            AddSystemLeftButton
-            
-            RemoveButton
-        }
+            // lifecycle
+            .task {
+                await WorkFlow {
+                    await systemModelRef.startUpdating()
+                }
+            }
+            // action
+            .contextMenu {
+                AddSystemUpButton
+                AddSystemDownButton
+                AddSystemRightButton
+                AddSystemLeftButton
+                
+                RemoveButton
+            }
     }
 }
 
