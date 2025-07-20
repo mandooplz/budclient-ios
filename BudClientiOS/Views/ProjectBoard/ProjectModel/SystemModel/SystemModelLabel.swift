@@ -27,9 +27,7 @@ struct SystemModelLabel: View {
         LabelContent
             // lifecycle
             .task {
-                await WorkFlow {
-                    await systemModelRef.startUpdating()
-                }
+                await systemModelRef.startUpdating()
             }
             // action
             .contextMenu {
@@ -63,9 +61,7 @@ extension SystemModelLabel {
         Button {
             Task {
                 triggerHapticFeedback()
-                await WorkFlow {
-                    await systemModelRef.addSystemTop()
-                }
+                await systemModelRef.addSystemTop()
             }
         } label: {
             Label("Add System Top", systemImage: "arrow.up")
@@ -76,9 +72,8 @@ extension SystemModelLabel {
         Button {
             Task {
                 triggerHapticFeedback()
-                await WorkFlow {
-                    await systemModelRef.addSystemBottom()
-                }
+                await systemModelRef.addSystemBottom()
+
             }
         } label: {
             Label("Add System Down", systemImage: "arrow.down")
@@ -89,9 +84,7 @@ extension SystemModelLabel {
         Button {
             Task {
                 triggerHapticFeedback()
-                await WorkFlow {
-                    await systemModelRef.addSystemLeft()
-                }
+                await systemModelRef.addSystemLeft()
             }
         } label: {
             Label("Add System Left", systemImage: "arrow.left")
@@ -102,9 +95,7 @@ extension SystemModelLabel {
         Button {
             Task {
                 triggerHapticFeedback()
-                await WorkFlow {
-                    await systemModelRef.addSystemRight()
-                }
+                await systemModelRef.addSystemRight()
             }
         } label: {
             Label("Add System Right", systemImage: "arrow.right")
@@ -114,9 +105,7 @@ extension SystemModelLabel {
         // remove
         Button(role: .destructive) {
             Task {
-                await WorkFlow {
-                    await systemModelRef.removeSystem()
-                }
+                await systemModelRef.removeSystem()
             }
         } label: {
             Label("Remove System", systemImage: "trash")
@@ -165,7 +154,7 @@ private struct SystemModelLabelPreview: View {
             signUpFormRef.passwordCheck = testPassword
         }
         
-        await signUpFormRef.signUp()
+        await signUpFormRef.submit()
     }
     func createSystemBoard() async {
         // create ProjectEditor
@@ -196,7 +185,7 @@ private struct SystemModelLabelPreview: View {
                     continuation.resume()
                 }
                 
-                await projectModelRef.createSystem()
+                await projectModelRef.createFirstSystem()
             }
         }
     }

@@ -32,9 +32,7 @@ extension ProfileBoardView {
     var SignOutButton: some View {
         Button(action: {
             Task {
-                await WorkFlow {
-                    await profileBoardRef.signOut()
-                }
+                await profileBoardRef.signOut()
             }
         }) {
             Text("Sign Out")
@@ -55,8 +53,8 @@ extension ProfileBoardView {
 private struct ProfileBoardPreview: View {
     let budClientRef = BudClient()
     var body: some View {
-        if let profileBoardRef = budClientRef.profileBoard?.ref {
-            ProfileBoardView(profileBoardRef)
+        if let profileRef = budClientRef.profile?.ref {
+            ProfileBoardView(profileRef)
         } else {
             if budClientRef.isUserSignedIn {
                 BudClientView(budClientRef)
@@ -81,7 +79,7 @@ private struct ProfileBoardPreview: View {
             signUpFormRef.passwordCheck = testPassword
         }
         
-        await signUpFormRef.signUp()
+        await signUpFormRef.submit()
     }
 }
 

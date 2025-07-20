@@ -84,7 +84,7 @@ extension SignUpFormView {
         Button(action: {
             Task {
                 isSigningUp = true
-                await signUpFormRef.signUp()
+                await signUpFormRef.submit()
                 await budClientRef.saveUserInCache()
                 isSigningUp = false
             }
@@ -114,7 +114,7 @@ extension SignUpFormView {
             
             Button(action: {
                 Task {
-                    await signUpFormRef.remove()
+                    await signUpFormRef.cancel()
                 }
             }) {
                 Text("Sign In")

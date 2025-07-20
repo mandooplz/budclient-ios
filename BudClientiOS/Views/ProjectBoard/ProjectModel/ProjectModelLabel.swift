@@ -45,9 +45,7 @@ extension ProjectModelLabel {
                         .onSubmit {
                             // 'Return' 키를 누르면 실행될 액션
                             Task {
-                                await WorkFlow {
-                                    await projectModelRef.pushName()
-                                }
+                                await projectModelRef.pushName()
                             }
                         }
                 } else {
@@ -63,9 +61,7 @@ extension ProjectModelLabel {
             // lifecycle
             .onDisappear {
                 Task {
-                    await WorkFlow {
-                        await projectModelRef.pushName()
-                    }
+                    await projectModelRef.pushName()
                 }
             }
         }
@@ -103,7 +99,7 @@ private struct ProjectEditorLabelPreview: View {
             signUpFormRef.passwordCheck = testPassword
         }
         
-        await signUpFormRef.signUp()
+        await signUpFormRef.submit()
     }
     func createProjectEditor() async {
         let projectBoardRef = budClientRef.projectBoard!.ref!

@@ -30,7 +30,7 @@ struct BudClientView: View {
                 
             } else if let projectBoardRef = budClientRef.projectBoard?.ref,
                       let communityRef = budClientRef.community?.ref,
-                      let profileBoardRef = budClientRef.profileBoard?.ref {
+                      let profile = budClientRef.profile?.ref {
                 
                 TabView {
                     Tab("Project", systemImage: "folder") {
@@ -42,7 +42,7 @@ struct BudClientView: View {
                     }
                     
                     Tab("Profile", systemImage: "person.crop.circle") {
-                        ProfileBoardView(profileBoardRef)
+                        ProfileBoardView(profile)
                     }
                 }
                 
@@ -51,9 +51,7 @@ struct BudClientView: View {
             }
         }
         .task {
-            await WorkFlow {
-                await budClientRef.setUp()
-            }
+            await budClientRef.setUp()
         }
     }
 }

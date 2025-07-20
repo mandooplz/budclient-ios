@@ -52,17 +52,13 @@ struct SignInFormView: View {
         .padding()
         .task {
             self.isSigningInByCache = true
-            await WorkFlow {
-                await signInFormRef.signInByCache()
-            }
+            await signInFormRef.signInByCache()
             self.isSigningInByCache = false
         }.onChange(of: signInFormRef.signUpForm) { _, newValue in
             showSignUpForm = (newValue != nil)
         }.sheet(isPresented: $showSignUpForm, onDismiss: {
             Task {
-                await WorkFlow {
-                    await signInFormRef.signUpForm?.ref?.remove()
-                }
+                await signInFormRef.signUpForm?.ref?.cancel()
             }
         }) {
             if let signUpFormRef = signInFormRef.signUpForm?.ref {
@@ -99,10 +95,8 @@ extension SignInFormView {
         Button(action: {
             Task {
                 isSigningIn = true
-                await WorkFlow {
-                    await signInFormRef.signIn()
-                    await budClientRef.saveUserInCache()
-                }
+                await signInFormRef.signIn()
+                await budClientRef.saveUserInCache()
                 isSigningIn = false
             }
         }) {
@@ -155,7 +149,7 @@ extension SignInFormView {
                 
                 googleFormRef.idToken = idToken
                 googleFormRef.accessToken = accessToken
-                await googleFormRef.signUpAndSignIn()
+                await googleFormRef.submit()
                 await budClientRef.saveUserInCache()
                 
                 isSigningInWithGoogle = false // 모든 작업이 끝나면 false로 변경
@@ -199,9 +193,7 @@ extension SignInFormView {
                 
                 Button(action: {
                     Task {
-                        await WorkFlow {
-                            await signInFormRef.setUpSignUpForm()
-                        }
+                        await signInFormRef.setUpSignUpForm()
                     }
                 }) {
                     Text("Sign Up")
@@ -268,7 +260,7 @@ private struct SignInFormPreview: View {
             
             Button("Signed Out") {
                 Task {
-                    await budClientRef.profileBoard?.ref?.signOut()
+                    await budClientRef.profile?.ref?.signOut()
                 }
             }.buttonStyle(.glassProminent)
         } else {

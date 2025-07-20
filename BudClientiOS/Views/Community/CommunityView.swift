@@ -49,7 +49,7 @@ private struct CommunityPreview: View {
             signUpFormRef.passwordCheck = testPassword
         }
         
-        await signUpFormRef.signUp()
+        await signUpFormRef.submit()
     }
 }
 

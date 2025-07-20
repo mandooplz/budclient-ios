@@ -29,9 +29,7 @@ struct ProjectModelView: View {
             if projectModelRef.systems.isEmpty {
                 EmptySystemView {
                     Task {
-                        await WorkFlow {
-                            await projectModelRef.createSystem()
-                        }
+                        await projectModelRef.createFirstSystem()
                     }
                 }
             } else {
@@ -40,9 +38,7 @@ struct ProjectModelView: View {
         }
         // lifecycle
         .task {
-            await WorkFlow {
-                await projectModelRef.startUpdating()
-            }
+            await projectModelRef.startUpdating()
         }
 
         // navigation
@@ -134,7 +130,7 @@ private struct ProjectModelPreview: View {
             signUpFormRef.passwordCheck = testPassword
         }
         
-        await signUpFormRef.signUp()
+        await signUpFormRef.submit()
     }
     func createProjectModel() async {
         let projectBoardRef = budClientRef.projectBoard!.ref!

@@ -35,21 +35,17 @@ struct ProjectBoardView: View {
                 // edit list
                 .onDelete { indexSet in
                     Task {
-                        await WorkFlow {
-                            for index in indexSet {
-                                let projectModel = await projectBoardRef.projects.values[index]
-                                
-                                await projectModel.ref?.removeProject()
-                            }
+                        for index in indexSet {
+                            let projectModel = projectBoardRef.projects.values[index]
+                            
+                            await projectModel.ref?.removeProject()
                         }
                     }
                 }
             }
             // lifecycle
             .task {
-                await WorkFlow {
-                    await projectBoardRef.startUpdating()
-                }
+                await projectBoardRef.startUpdating()
             }
             
             // navigation
@@ -62,9 +58,7 @@ struct ProjectBoardView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         Task {
-                            await WorkFlow {
-                                await projectBoardRef.createProject()
-                            }
+                            await projectBoardRef.createProject()
                         }
                     }) {
                         Image(systemName: "plus")
@@ -114,7 +108,7 @@ private struct ProjectBoardPreview: View {
             signUpFormRef.passwordCheck = testPassword
         }
         
-        await signUpFormRef.signUp()
+        await signUpFormRef.submit()
     }
 }
 
