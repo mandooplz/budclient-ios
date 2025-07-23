@@ -15,8 +15,8 @@ import GoogleSignInSwift
 // MARK: App
 @main
 struct BudClientiOSApp: App {
-    let budClientRef = BudClient(plistPath: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
-//    let budClientRef = BudClient()
+//    let budClientRef = BudClient(plistPath: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
+    let budClientRef = BudClient()
     
     var body: some Scene {
         WindowGroup {
@@ -28,9 +28,9 @@ struct BudClientiOSApp: App {
             
             // forTest
                 .task {
-//                    #if DEBUG
-//                    await signUp(budClientRef)
-//                    #endif
+                    #if DEBUG
+                    await signUp(budClientRef)
+                    #endif
                 }
         }
     }

@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import BudClient
+import BudClientUI
 import Values
 import Collections
 
@@ -45,10 +46,15 @@ struct SystemModelLabel: View {
 // MARK: Component
 extension SystemModelLabel {
     var LabelContent: some View {
-        VStack(alignment: .leading) {
-            Text(systemModelRef.name)
+        HStack(alignment: .bottom) {
+            EditableText(text: systemModelRef.name,
+                         textInput: $systemModelRef.nameInput,
+                         submitHandler: systemModelRef.pushName )
                 .font(.headline)
                 .fontWeight(.bold)
+                
+            
+            Spacer()
                         
             Text("(\(systemModelRef.location.x), \(systemModelRef.location.y))")
                 .font(.subheadline)
