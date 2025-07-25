@@ -34,11 +34,9 @@ struct ProjectBoardView: View {
                 }
                 // edit list
                 .onDelete { indexSet in
-                    Task {
-                        for index in indexSet {
-                            let projectModel = projectBoardRef.projects.values[index]
-                            
-                            await projectModel.ref?.removeProject()
+                    for index in indexSet {
+                        Task {
+                            await projectBoardRef.projects.values[index].ref?.removeProject()
                         }
                     }
                 }

@@ -43,6 +43,12 @@ struct ObjectModelLabel: View {
                     await objectModelRef.createChildObject()
                 }
             }
+            
+            Button("삭제하기") {
+                Task {
+                    await objectModelRef.removeObject()
+                }
+            }
         }
     }
 }

@@ -24,7 +24,6 @@ struct ObjectModelView: View {
     // MARK: state
     
     
-    
     // MARK: body
     var body: some View {
         Form {
@@ -41,8 +40,19 @@ struct ObjectModelView: View {
             StatesSection
             ActionsSection
         }
+        
         // navigation
         .navigationTitle(objectModelRef.name)
+        .navigationDestination(for: StateModel.ID.self) { stateModel in
+            if let stateModelRef = stateModel.ref {
+                StateModelView(stateModelRef)
+            }
+        }
+        .navigationDestination(for: ActionModel.ID.self) { actionModel in
+            if let actionModelRef = actionModel.ref {
+                ActionModelView(actionModelRef)
+            }
+        }
     }
 }
 
@@ -66,34 +76,143 @@ private extension ObjectModelView {
             }
             
             // 새로운 자식 객체를 생성하는 버튼입니다.
-            Button(action: {
-                Task {
-                    await objectModelRef.createChildObject()
-                }
-            }) {
+            Button {
+                Task { await objectModelRef.createChildObject()}
+            } label: {
                 Label("Create Child Object", systemImage: "plus")
             }
         }
     }
     private var StatesSection: some View {
         Section(header: Text("States")) {
-            Text("States: \(objectModelRef.states.count)")
+            ForEach(objectModelRef.states.values, id: \.value) { stateModel in
+                NavigationLink(value: stateModel) {
+                    if let stateModelRef = stateModel.ref {
+                        StateModelLabel(stateModelRef)
+                    }
+                }
+            }
+            // remove Button
+            .onDelete { indexSet in
+                for index in indexSet {
+                    Task { await objectModelRef.states.values[index].ref?.removeState() }
+                }
+            }
             
-            Button(action: {
+            Button {
                 Task { await objectModelRef.appendNewState() }
-            }) {
+            } label: {
                 Label("Append New State", systemImage: "plus.circle")
             }
         }
     }
     private var ActionsSection: some View {
         Section(header: Text("Actions")) {
-            Text("Actions: \(objectModelRef.actions.count)")
-            Button(action: {
+            ForEach(objectModelRef.actions.values, id: \.value) { actionModel in
+                NavigationLink(value: actionModel) {
+                    if let actionModelRef = actionModel.ref {
+                        ActionModelLabel(actionModelRef)
+                    }
+                }
+            }
+            // remove Button
+            .onDelete { indexSet in
+                for index in indexSet {
+                    Task { await objectModelRef.actions.values[index].ref?.removeAction() }
+                }
+            }
+            
+            Button {
                 Task { await objectModelRef.appendNewAction() }
-            }) {
+            } label: {
                 Label("Append New Action", systemImage: "plus.circle")
             }
         }
     }
 }
+
+
+// MARK: Preview
+private struct ObjectModelPreview: View {
+    let budClientRef = BudClient()
+    
+    var body: some View {
+        if let projectBoardRef = budClientRef.projectBoard?.ref,
+           let projectModelRef = projectBoardRef.projects.values.first?.ref,
+           let systemModelRef = projectModelRef.systems.values.first?.ref,
+           let rootObjectModelRef = systemModelRef.root?.ref {
+            ObjectModelView(systemModelRef, rootObjectModelRef)
+        } else {
+            ProgressView("SystemModelPreview")
+                .task {
+                    await signUp()
+                    await createRootObjectModel()
+                }
+        }
+    }
+    
+    func signUp() async {
+        
+        await budClientRef.setUp()
+        let signInFormRef = budClientRef.signInForm!.ref!
+        
+        await signInFormRef.setUpSignUpForm()
+        let signUpFormRef = signInFormRef.signUpForm!.ref!
+        let testEmail = Email.random().value
+        let testPassword = Password.random().value
+        await MainActor.run {
+            signUpFormRef.email = testEmail
+            signUpFormRef.password = testPassword
+            signUpFormRef.passwordCheck = testPassword
+        }
+        
+        await signUpFormRef.submit()
+    }
+    func createRootObjectModel() async {
+        // create ProjectModel
+        let projectBoardRef = budClientRef.projectBoard!.ref!
+        
+        await projectBoardRef.startUpdating()
+        
+        await withCheckedContinuation { continuation in
+            Task {
+                projectBoardRef.setCallback {
+                    continuation.resume()
+                }
+                
+                await projectBoardRef.createProject()
+            }
+        }
+        
+        // create SystemModel
+        let projectModelRef = budClientRef.projectBoard!.ref!
+            .projects.values.first!.ref!
+        
+        await projectModelRef.startUpdating()
+        await withCheckedContinuation { continuation in
+            Task {
+                projectModelRef.setCallback {
+                    continuation.resume()
+                }
+                
+                await projectModelRef.createFirstSystem()
+            }
+        }
+        
+        // create ObjectModel
+        let systemModelRef = projectModelRef.systems.values.first!.ref!
+        
+        await systemModelRef.startUpdating()
+        await withCheckedContinuation { continuation in
+            Task {
+                systemModelRef.setCallback {
+                    continuation.resume()
+                }
+                
+                await systemModelRef.createRootObject()
+            }
+        }
+    }
+}
+
+#Preview { ObjectModelPreview() }

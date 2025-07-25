@@ -63,6 +63,12 @@ extension ProjectModelView {
                     }
                 }
             }
+            // remove Button
+            .onDelete { indexSet in
+                for index in indexSet {
+                    Task { await projectModelRef.systems.values[index].ref?.removeSystem() }
+                }
+            }
         }
     }
     func EmptySystemView(_ action: @Sendable @escaping () -> Void) -> some View {

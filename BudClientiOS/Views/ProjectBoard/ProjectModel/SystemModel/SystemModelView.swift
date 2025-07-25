@@ -85,16 +85,13 @@ extension SystemModelView {
                 .multilineTextAlignment(.center)
             
             // 첫 번째 루트 객체를 생성하는 버튼입니다.
-            Button(action: {
-                // 버튼을 누르면 createRootObject 함수를 비동기적으로 실행합니다.
-                Task {
-                    await systemModelRef.createRootObject()
-                }
-            }) {
+            Button {
+                Task { await systemModelRef.createRootObject() }
+            } label: {
                 Label("첫 객체 생성", systemImage: "plus")
             }
             .buttonStyle(.borderedProminent)
-            .padding(.top)
+            .padding(.top)      
             
             Spacer()
         }
@@ -117,7 +114,6 @@ private struct SystemModelPreview: View {
             ProgressView("SystemModelPreview")
                 .task {
                     await signUp()
-                    await createProjectModel()
                     await createSystemModel()
                 }
         }
@@ -139,7 +135,8 @@ private struct SystemModelPreview: View {
         
         await signUpFormRef.submit()
     }
-    func createProjectModel() async {
+    func createSystemModel() async {
+        // create ProjectModel
         let projectBoardRef = budClientRef.projectBoard!.ref!
         
         await projectBoardRef.startUpdating()
@@ -153,8 +150,8 @@ private struct SystemModelPreview: View {
                 await projectBoardRef.createProject()
             }
         }
-    }
-    func createSystemModel() async {
+        
+        // create SystemModel
         let projectModelRef = budClientRef.projectBoard!.ref!
             .projects.values.first!.ref!
         

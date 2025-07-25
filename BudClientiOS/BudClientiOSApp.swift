@@ -5,9 +5,10 @@
 //  Created by 김민우 on 6/26/25.
 //
 import Foundation
+import Collections
+import Values
 import SwiftUI
 import BudClient
-import Values
 import GoogleSignIn
 import GoogleSignInSwift
 
@@ -29,7 +30,8 @@ struct BudClientiOSApp: App {
             // forTest
                 .task {
                     #if DEBUG
-                    await signUp(budClientRef)
+                    await signUp()
+                    await createRootObjectModel()
                     #endif
                 }
         }
@@ -38,19 +40,67 @@ struct BudClientiOSApp: App {
 
 
 // MARK: Helphers
-private func signUp(_ budClientRef: BudClient) async {
-    await budClientRef.setUp()
-    let signInFormRef = budClientRef.signInForm!.ref!
-    
-    await signInFormRef.setUpSignUpForm()
-    let signUpFormRef = signInFormRef.signUpForm!.ref!
-    let testEmail = Email.random().value
-    let testPassword = Password.random().value
-    await MainActor.run {
-        signUpFormRef.email = testEmail
-        signUpFormRef.password = testPassword
-        signUpFormRef.passwordCheck = testPassword
+private extension BudClientiOSApp {
+    func signUp() async {
+        await budClientRef.setUp()
+        let signInFormRef = budClientRef.signInForm!.ref!
+        
+        await signInFormRef.setUpSignUpForm()
+        let signUpFormRef = signInFormRef.signUpForm!.ref!
+        let testEmail = Email.random().value
+        let testPassword = Password.random().value
+        await MainActor.run {
+            signUpFormRef.email = testEmail
+            signUpFormRef.password = testPassword
+            signUpFormRef.passwordCheck = testPassword
+        }
+        
+        await signUpFormRef.submit()
     }
-    
-    await signUpFormRef.submit()
+    func createRootObjectModel() async {
+        // create ProjectModel
+        let projectBoardRef = budClientRef.projectBoard!.ref!
+        
+        await projectBoardRef.startUpdating()
+        
+        await withCheckedContinuation { continuation in
+            Task {
+                projectBoardRef.setCallback {
+                    continuation.resume()
+                }
+                
+                await projectBoardRef.createProject()
+            }
+        }
+        
+        // create SystemModel
+        let projectModelRef = budClientRef.projectBoard!.ref!
+            .projects.values.first!.ref!
+        
+        await projectModelRef.startUpdating()
+        await withCheckedContinuation { continuation in
+            Task {
+                projectModelRef.setCallback {
+                    continuation.resume()
+                }
+                
+                await projectModelRef.createFirstSystem()
+            }
+        }
+        
+        // create ObjectModel
+        let systemModelRef = projectModelRef.systems.values.first!.ref!
+        
+        await systemModelRef.startUpdating()
+        await withCheckedContinuation { continuation in
+            Task {
+                systemModelRef.setCallback {
+                    continuation.resume()
+                }
+                
+                await systemModelRef.createRootObject()
+            }
+        }
+    }
 }
+
