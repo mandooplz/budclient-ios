@@ -27,6 +27,8 @@ struct ObjectModelView: View {
     // MARK: body
     var body: some View {
         Form {
+            RoleSection
+            
             if objectModelRef.role == .node {
                 if let objectModel = systemModelRef.objects[objectModelRef.parent],
                    let objectModelRef = objectModel.ref {
@@ -58,6 +60,12 @@ struct ObjectModelView: View {
 
 
 private extension ObjectModelView {
+    private var RoleSection: some View {
+        Section(header: Text("Role")) {
+            Text(objectModelRef.role.rawValue.uppercased())
+                .bold()
+        }
+    }
     private var ChildObjectsSection: some View {
         // MARK: 자식 객체 섹션
         Section(header: Text("Child Objects")) {
