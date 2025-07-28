@@ -1,5 +1,5 @@
 {
-  "originHash" : "0bfc625dff8487dc8aa1c53063411aba254d26a46d50f3d258694597b25edc17",
+  "originHash" : "8543a25e5fe4a547fcc6ebea0156dd6173ca506456d33615b6b9f9c1c097dd83",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -34,7 +34,7 @@
       "location" : "https://github.com/mandooplz/budmacro.git",
       "state" : {
         "branch" : "main",
-        "revision" : "9fe6a7bebf580a9da1a7dc24168775e3dc19ae2c"
+        "revision" : "9faf09fcd47ac881941dcd9fb39cebfad77b9775"
       }
     },
     {
@@ -159,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "c1805596154bb3a265fd91b8ac0c4433b4348fb0",
-        "version" : "1.2.0"
+        "revision" : "8c0c0a8b49e080e54e5e328cc552821ff07cd341",
+        "version" : "1.2.1"
       }
     },
     {

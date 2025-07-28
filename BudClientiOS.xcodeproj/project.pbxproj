@@ -15,6 +15,8 @@
 		CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CE6FE5092E0F10CB00F1A6BD /* BudClient */; };
 		CEBD9F142E0D5E4300F05748 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEBD9F132E0D5E4300F05748 /* BudClient */; };
 		CED4454B2E241FFA00203F29 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = CED4454A2E241FFA00203F29 /* Collections */; };
+		CEE14CB12E375A2C001AA401 /* BudClient in Frameworks */ = {isa = PBXBuildFile; productRef = CEE14CB02E375A2C001AA401 /* BudClient */; };
+		CEE14CB32E375A2C001AA401 /* Values in Frameworks */ = {isa = PBXBuildFile; productRef = CEE14CB22E375A2C001AA401 /* Values */; };
 		CEF3204B2E10203000072C6C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3204A2E10203000072C6C /* GoogleSignIn */; };
 		CEF3204D2E10203000072C6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3204C2E10203000072C6C /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
@@ -113,6 +115,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEE14CB32E375A2C001AA401 /* Values in Frameworks */,
+				CEE14CB12E375A2C001AA401 /* BudClient in Frameworks */,
 				CE6FE50A2E0F10CB00F1A6BD /* BudClient in Frameworks */,
 				CEF3204D2E10203000072C6C /* GoogleSignInSwift in Frameworks */,
 				CED4454B2E241FFA00203F29 /* Collections in Frameworks */,
@@ -234,6 +238,8 @@
 				CE5CAD0B2E212B1A0097F80D /* BudClient */,
 				CE5CAD0D2E212B1A0097F80D /* Values */,
 				CED4454A2E241FFA00203F29 /* Collections */,
+				CEE14CB02E375A2C001AA401 /* BudClient */,
+				CEE14CB22E375A2C001AA401 /* Values */,
 			);
 			productName = BudClientiOS;
 			productReference = CEA457862E0CFEF6008F5A0C /* BudClientiOS.app */;
@@ -322,8 +328,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CEF320492E10203000072C6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-				CE5CAD0A2E212B1A0097F80D /* XCLocalSwiftPackageReference "../BudClient" */,
 				CED445492E241FFA00203F29 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				CEE14CAF2E375A2C001AA401 /* XCLocalSwiftPackageReference "../BudClient" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CEA457872E0CFEF6008F5A0C /* Products */;
@@ -812,7 +818,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		CE5CAD0A2E212B1A0097F80D /* XCLocalSwiftPackageReference "../BudClient" */ = {
+		CEE14CAF2E375A2C001AA401 /* XCLocalSwiftPackageReference "../BudClient" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../BudClient;
 		};
@@ -858,6 +864,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CED445492E241FFA00203F29 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = Collections;
+		};
+		CEE14CB02E375A2C001AA401 /* BudClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BudClient;
+		};
+		CEE14CB22E375A2C001AA401 /* Values */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Values;
 		};
 		CEF3204A2E10203000072C6C /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
