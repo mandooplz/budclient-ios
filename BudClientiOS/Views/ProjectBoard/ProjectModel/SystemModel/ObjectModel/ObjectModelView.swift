@@ -147,7 +147,7 @@ private struct ObjectModelPreview: View {
     var body: some View {
         if let projectBoardRef = budClientRef.projectBoard?.ref,
            let projectModelRef = projectBoardRef.projects.values.first?.ref,
-           let systemModelRef = projectModelRef.systems.values.first?.ref,
+           let systemModelRef = projectModelRef.systemList.first?.ref,
            let rootObjectModelRef = systemModelRef.root?.ref {
             ObjectModelView(systemModelRef, rootObjectModelRef)
         } else {
@@ -208,7 +208,7 @@ private struct ObjectModelPreview: View {
         }
         
         // create ObjectModel
-        let systemModelRef = projectModelRef.systems.values.first!.ref!
+        let systemModelRef = projectModelRef.systemList.first!.ref!
         
         await systemModelRef.startUpdating()
         await withCheckedContinuation { continuation in

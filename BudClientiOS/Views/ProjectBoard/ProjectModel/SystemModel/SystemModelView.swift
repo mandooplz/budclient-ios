@@ -108,7 +108,7 @@ private struct SystemModelPreview: View {
     var body: some View {
         if let projectBoardRef = budClientRef.projectBoard?.ref,
            let projectModelRef = projectBoardRef.projects.values.first?.ref,
-           let systemModelRef = projectModelRef.systems.values.first?.ref {
+           let systemModelRef = projectModelRef.systemList.first?.ref {
             SystemModelView(systemModelRef)
         } else {
             ProgressView("SystemModelPreview")

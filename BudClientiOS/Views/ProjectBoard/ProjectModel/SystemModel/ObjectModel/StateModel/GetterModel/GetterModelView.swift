@@ -21,7 +21,7 @@ struct GetterModelView: View {
     }
     
     // MARK: state
-    @State var parameterInput: OrderedSet<ParameterValue>
+    @State var parameterInput: [ParameterValue]
     
     
     // MARK: body
@@ -56,7 +56,7 @@ private extension GetterModelView {
     var Parameters: some View {
         Section{
             ForEach(parameterInput, id: \.self) { parameter in
-                Text("\(parameter.name): \(parameter.type.name)")
+                Text("\(parameter.name)")
             }
             // edit state
             .onDelete { indexSet in
@@ -65,7 +65,7 @@ private extension GetterModelView {
                 }
             }
             .onMove { source, destination in
-                parameterInput.elements.move(fromOffsets: source, toOffset: destination)
+                parameterInput.move(fromOffsets: source, toOffset: destination)
             }
             
         } header: {
@@ -75,7 +75,7 @@ private extension GetterModelView {
     
     var Result: some View {
         Section {
-            Text(getterModelRef.result.name)
+            Text("\(getterModelRef.result.debugDescription)")
         } header: {
             Text("Result")
         }

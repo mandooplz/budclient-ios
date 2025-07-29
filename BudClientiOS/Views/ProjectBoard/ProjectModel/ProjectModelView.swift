@@ -26,7 +26,7 @@ struct ProjectModelView: View {
     // MARK: body
     var body: some View {
         ZStack {
-            if projectModelRef.systems.isEmpty {
+            if projectModelRef.systemList.isEmpty {
                 EmptySystemView {
                     Task {
                         await projectModelRef.createFirstSystem()
@@ -56,7 +56,7 @@ struct ProjectModelView: View {
 extension ProjectModelView {
     var SystemModelList: some View {
         List {
-            ForEach(projectModelRef.systems.values, id: \.value) { systemModel in
+            ForEach(projectModelRef.systemList, id: \.value) { systemModel in
                 NavigationLink(value: systemModel) {
                     if systemModel.isExist {
                         SystemModelLabel(systemModel.ref!)
@@ -66,7 +66,7 @@ extension ProjectModelView {
             // remove Button
             .onDelete { indexSet in
                 for index in indexSet {
-                    Task { await projectModelRef.systems.values[index].ref?.removeSystem() }
+                    Task { await projectModelRef.systemList[index].ref?.removeSystem() }
                 }
             }
         }

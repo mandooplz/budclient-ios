@@ -16,7 +16,9 @@ import GoogleSignInSwift
 // MARK: App
 @main
 struct BudClientiOSApp: App {
-    let budClientRef = BudClient(plistPath: Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!)
+    let budClientRef = BudClient(plistPath: Bundle.main.path(forResource: "GoogleService-Info",
+                                                             ofType: "plist")!,
+                                 useEmulator: true)
 //    let budClientRef = BudClient()
     
     var body: some Scene {
@@ -89,7 +91,7 @@ private extension BudClientiOSApp {
         }
         
         // create ObjectModel
-        let systemModelRef = projectModelRef.systems.values.first!.ref!
+        let systemModelRef = projectModelRef.systemList.first!.ref!
         
         await systemModelRef.startUpdating()
         await withCheckedContinuation { continuation in

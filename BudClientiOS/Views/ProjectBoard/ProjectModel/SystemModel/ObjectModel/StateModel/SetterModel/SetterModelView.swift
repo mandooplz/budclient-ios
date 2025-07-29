@@ -21,7 +21,7 @@ struct SetterModelView: View {
     }
     
     // MARK: state
-    @State private var parameterInput: OrderedSet<ParameterValue>
+    @State private var parameterInput: [ParameterValue]
     
     
     // MARK: body
@@ -54,8 +54,8 @@ struct SetterModelView: View {
 private extension SetterModelView {
     var Parameters: some View {
         Section{
-            ForEach(setterModelRef.parameters.keys, id: \.self) { parameter in
-                Text("\(parameter.name): \(parameter.type.name)")
+            ForEach(setterModelRef.parameters, id: \.self) { parameter in
+                Text("\(parameter.name)")
             }
             // edit state
             .onDelete { indexSet in
@@ -64,10 +64,10 @@ private extension SetterModelView {
                 }
             }
             .onMove { source, destination in
-                self.parameterInput.elements.move(fromOffsets: source, toOffset: destination)
+                self.parameterInput.move(fromOffsets: source, toOffset: destination)
                 
                 Task {
-                    parameterInput.elements.move(fromOffsets: source, toOffset: destination)
+                    parameterInput.move(fromOffsets: source, toOffset: destination)
                 }
             }
         } header: {
