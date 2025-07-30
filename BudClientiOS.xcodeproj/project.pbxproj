@@ -160,8 +160,8 @@
 				CEA457A02E0CFEF7008F5A0C /* BudClientiOSUITests */,
 				CE17C3A72E23F41D0021B22C /* BudClientUI */,
 				CEA457872E0CFEF6008F5A0C /* Products */,
-				CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */,
 				CE4293322E11605000C1F9B3 /* Frameworks */,
+				CE4A1DBE2E0F0911001254F5 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};

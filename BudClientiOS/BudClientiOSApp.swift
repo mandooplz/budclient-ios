@@ -18,7 +18,7 @@ import GoogleSignInSwift
 struct BudClientiOSApp: App {
     let budClientRef = BudClient(plistPath: Bundle.main.path(forResource: "GoogleService-Info",
                                                              ofType: "plist")!,
-                                 useEmulator: true)
+                                 useEmulator: false)
 //    let budClientRef = BudClient()
     
     var body: some Scene {
